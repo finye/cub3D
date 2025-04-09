@@ -1,26 +1,69 @@
 NAME = cub3D
 
-SOURCES = main.c
+SRC_DIR = srcs
+SRCS = $(addprefix $(SRC_DIR)/, \
+			main.c)
 
-OBJECTS = $(SOURCES:.c=.o)
+OBJ_DIR =	objs
+OBJS =		$(SRCS:$(SRC_DIR)%.c=$(OBJ_DIR)/%.o)
 
-CC = cc
-CFLAGS = -Wall -Wextra -Werror
+LIBFT_DIR =	./libft
+LIBFT =		$(LIBFT_DIR)/libft.a
 
-all: $(NAME)
+MLX_DIR =	./MLX42
+MLX =		$(MLX_DIR)/build/libmlx42.a
 
-%.o: %.c
-	@$(CC) -c $(CFLAGS) $< -o $@
+CC =		cc
+CFLAGS =	-Wall -Wextra -Werror -g
+INCLUDES =	-I./libft/incl -I./incl -I./MLX42/include
 
-$(NAME): $(OBJECTS)
-		@$(CC) $(CFLAGS) $(OBJECTS) -o $(NAME)
+RM =		rm -rf
+
+GREEN =		\033[0;92m
+BLUE = \033[0;94m
+END_COLOR =	\033[0m
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(OBJ_DIR)
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+$(NAME): $(MLX) $(LIBFT) $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) $(MLX) $(LIBFT) -lglfw -ldl -pthread -lm -o $(NAME)
+	@echo "$(GREEN)cub3D compiled$(END_COLOR)"
+
+$(LIBFT):
+	@make -C $(LIBFT_DIR)
+
+$(MLX):
+	@if [ ! -d "$(MLX_DIR)" ]; then \
+		git clone https://github.com/codam-coding-college/MLX42.git $(MLX_DIR); \
+	fi
+	@if [ ! -d "$(MLX_DIR)/build" ]; then \
+		cmake $(MLX_DIR) -B $(MLX_DIR)/build; \
+	fi
+	@make -C $(MLX_DIR)/build -j4
+
+all: $(LIBFT) $(MLX) $(NAME)
 
 clean:
-		@rm -f ${OBJECTS}
+	$(RM) $(OBJ_DIR)
+	@echo "$(BLUE)Cleaned cub3D object files$(END_COLOR)"
+	$(RM) $(MLX_DIR)/build
+	@echo "$(BLUE)Cleaned MLX42 build$(END_COLOR)"
+	@make -C $(LIBFT_DIR) clean
 
-fclean: clean
-		@rm -f ${NAME}
-		
-re : fclean all
+fclean:
+	$(RM) $(NAME) $(OBJ_DIR)
+	@echo "$(BLUE)Fully cleaned cub3D$(END_COLOR)"
+	$(RM) $(MLX_DIR)
+	@echo "$(BLUE)Fully cleaned MLX42$(END_COLOR)"
+	@make -C $(LIBFT_DIR) fclean
 
-.PHONY: all clean fclean re
+re: fclean all
+
+valgrind:
+	valgrind --leak-check=full --show-reachable=yes --show-leak-kinds=all \
+	--track-origins=yes --track-fds=yes --trace-children=yes \
+	--suppressions=readline.supp -s ./cub3D
+
+.PHONY: all clean fclean re valgrind
