@@ -1,9 +1,37 @@
 #include "../incl/cub3D.h"
 
-int main(int ac, char **av)
+static void	validate_args(int ac, char **av)
 {
-	(void)ac;
-	(void)av;
-	printf("The next episode =)");
+	size_t	len;
+
+	if (ac == 1)
+		err(NO_ARG);
+	if (ac > 2)
+		err(TOO_MANY_ARGS);
+	len = ft_strlen(av[1]);
+	if (len < 5 || !ft_strnstr(&av[1][len - 4], ".cub", 4) ||
+			ft_strnstr(&av[1][len - 5], "/.cub", 5))
+		err(FILE_NOT_CUB);
+}
+
+int	open_file(char *file)
+{
+	int	fd;
+
+	fd = open(file, O_RDONLY);
+	if (fd < 0)
+		err(FILE_OPEN_ERROR);
+	return (fd);
+}
+
+int	main(int ac, char **av)
+{
+	int		fd;
+	t_cub	cub;
+
+	validate_args(ac, av);
+	fd = open_file(av[1]);
+	init(&cub, fd, av[1]);
+	parse_file(&cub);
 	return (0);
 }

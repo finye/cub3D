@@ -2,7 +2,11 @@ NAME = cub3D
 
 SRC_DIR = srcs
 SRCS = $(addprefix $(SRC_DIR)/, \
-			main.c)
+			clean.c \
+			error.c \
+			init.c \
+			main.c \
+			parse_file.c)
 
 OBJ_DIR =	objs
 OBJS =		$(SRCS:$(SRC_DIR)%.c=$(OBJ_DIR)/%.o)
@@ -46,14 +50,14 @@ $(MLX):
 all: $(LIBFT) $(MLX) $(NAME)
 
 clean:
-	$(RM) $(OBJ_DIR)
+	@$(RM) $(OBJ_DIR)
 	@echo "$(BLUE)Cleaned cub3D object files$(END_COLOR)"
-	$(RM) $(MLX_DIR)/build
+	@$(RM) $(MLX_DIR)/build
 	@echo "$(BLUE)Cleaned MLX42 build$(END_COLOR)"
 	@make -C $(LIBFT_DIR) clean
 
 fclean:
-	$(RM) $(NAME) $(OBJ_DIR)
+	@$(RM) $(NAME) $(OBJ_DIR)
 	@echo "$(BLUE)Fully cleaned cub3D$(END_COLOR)"
 	$(RM) $(MLX_DIR)
 	@echo "$(BLUE)Fully cleaned MLX42$(END_COLOR)"
