@@ -28,6 +28,7 @@ void init_map(t_map *m)
 	m->img_player = NULL;
 	m->img_wall = NULL;
 	m->pos_p = (t_coord){4, 2};
+	printf("[m->pos_p.x] = [%d][ m->pos_p.y] = [%d]\n", m->pos_p.x, m->pos_p.y);
 }
 
 static void	get_texture(char *path, mlx_image_t **img, t_map *m)
@@ -112,6 +113,7 @@ static void	move(char pos, char sign, int new_pos, t_map *d)
 
 static void	move_player(int new_y, int new_x, t_map *d, char direction)
 {
+	printf("[new_y] = [%d][new_x] = [%d]\n", new_y, new_x);
 	if (d->map_arr[new_y][new_x] != '1')
 	{
 		d->map_arr[d->pos_p.y][d->pos_p.x] = '0';
@@ -133,6 +135,7 @@ void	game_keyhook(mlx_key_data_t keydata, void *param)
 	m = (t_map *)param;
 	if (keydata.action == MLX_PRESS)
 	{
+		ft_printf("[curr_Y] = [%d][curr_x] = [%d]\n", m->pos_p.y, m->pos_p.x);
 		if (keydata.key == MLX_KEY_ESCAPE)
 		{
 			ft_printf("Moi Moi!!\n");
