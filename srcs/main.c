@@ -28,10 +28,15 @@ int	main(int ac, char **av)
 {
 	int		fd;
 	t_cub	cub;
+	t_map	*m;
 
 	validate_args(ac, av);
 	fd = open_file(av[1]);
 	init(&cub, fd, av[1]);
 	parse_file(&cub);
+	m = ft_calloc(1, sizeof(t_map) + 1);
+	render_map(m);
+	mlx_key_hook(m->mlx, &game_keyhook, &m);
+	mlx_loop(m->mlx);
 	return (0);
 }

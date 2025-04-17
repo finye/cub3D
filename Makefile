@@ -6,7 +6,8 @@ SRCS = $(addprefix $(SRC_DIR)/, \
 			error.c \
 			init.c \
 			main.c \
-			parse_file.c)
+			parse_file.c \
+			render_map.c)
 
 OBJ_DIR =	objs
 OBJS =		$(SRCS:$(SRC_DIR)%.c=$(OBJ_DIR)/%.o)

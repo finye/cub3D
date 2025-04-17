@@ -25,6 +25,8 @@
 # define NO_ARG "Path to a valid map file missing"
 # define TOO_MANY_ARGS "Too many arguments"
 
+#define TILE_SZ 32
+
 typedef struct s_cub
 {
 	char	**map;
@@ -34,6 +36,24 @@ typedef struct s_cub
 	int		col;
 	int		row_count;
 }	t_cub;
+
+typedef struct s_coord
+{
+	int	x;
+	int	y;
+}	t_coord;
+
+typedef struct s_map
+{
+	char		**map_arr;
+	int			map_hgt;
+	int			map_wdt;
+	t_coord		pos_p;
+	mlx_t		*mlx;
+	mlx_image_t	*img_player;
+	mlx_image_t	*img_wall;
+	mlx_image_t	*img_floor;
+}	t_map;
 
 // clean
 void	free_map(t_cub *cub);
@@ -46,6 +66,10 @@ void	init(t_cub *cub, int fd, char *path);
 
 // main
 int		open_file(char *file);
+
+//mlx_init
+void	render_map(t_map *m);
+void	game_keyhook(mlx_key_data_t keydata, void *param);
 
 // parse
 int		parse_file(t_cub *cub);
