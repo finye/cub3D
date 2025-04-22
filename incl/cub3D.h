@@ -17,29 +17,59 @@
 # define BLUE	"\e[34m"
 # define END	"\e[0m"
 
+# define FLOOR 1
+# define CEILING 2
+
+# define EXTRA_RGB "Too many RGB values found"
 # define FILE_NOT_CUB "Please provide a valid .cub file"
 # define FILE_OPEN_ERROR "Couldn't open map file"
-# define MALLOC_MAP "Memory allocation for the map failed"
-# define MALLOC_MAP_ROW "Failed to store map row"
+# define MALLOC_INPUT_FILE "Memory allocation for the input data failed"
+# define MALLOC_FILE_LINE "Failed to store input file line"
 # define MAP_TOO_BIG "The map is too big"
+# define MAP_MISSING "Map is missing"
+# define MAP_WALLS "Map not fully enclosed with walls"
+# define MULTI_COLOR_ID "Multiple color identifiers found"
+# define MULTI_WALL_ID "Too many wall texture identifiers found"
 # define NO_ARG "Path to a valid map file missing"
+# define NO_ID "No valid identifier found"
+# define NO_TEXTURE_PATH "No path provided for wall texture"
+# define NOT_ID "Identifier missing or invalid syntax"
 # define TOO_MANY_ARGS "Too many arguments"
+# define WRONG_RGB_VALUE "Invalid RGB value(s)"
 
-typedef struct s_cub
+typedef struct	s_rbg
 {
-	char	**map;
-	char	*path;
-	int		fd;
-	int		row;
-	int		col;
-	int		row_count;
+	int	r;
+	int	g;
+	int	b;
+}	t_rgb;
+
+typedef struct	s_cub
+{
+	char			**data;
+	char			*path;
+	int				fd;
+	int				line;
+	int				col;
+	int				line_count;
+	int				id_count;
+	t_rgb			floor;
+	t_rgb			ceiling;
+	mlx_texture_t	*north;
+	mlx_texture_t	*south;
+	mlx_texture_t	*west;
+	mlx_texture_t	*east;
 }	t_cub;
 
 // clean
-void	free_map(t_cub *cub);
+void	free_data(t_cub *cub);
+void	free_split(char **split);
 
 // error
 void	err(char *msg);
+
+// floor & ceiling
+int		set_floor_ceiling(char *id, char *color_info, t_cub *cub);
 
 // init
 void	init(t_cub *cub, int fd, char *path);
@@ -49,5 +79,6 @@ int		open_file(char *file);
 
 // parse
 int		parse_file(t_cub *cub);
+int		parse_line(char **split_line, t_cub *cub);
 
 #endif

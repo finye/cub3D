@@ -3,6 +3,9 @@
 void	err(char *msg)
 {
 	printf(RED "Error\n" END);
-	printf("%s\n", msg);
+	if (mlx_errno)
+		printf("%s\n", mlx_strerror(mlx_errno));
+	else if (msg)
+		printf("%s\n", msg);
 	exit (1);
 }
