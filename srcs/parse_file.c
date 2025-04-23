@@ -3,15 +3,24 @@
 static int	label_ids(char *id, char *content, t_cub *cub)
 {
 	if (!ft_strcmp("NO\0", id) || !ft_strcmp("NO\n", id))
+	{
+		cub->north = ft_strdup(content);
 		return (NO);
+	}
 	if (!ft_strcmp("SO\0", id) || !ft_strcmp("SO\n", id))
+	{
+		cub->south = ft_strdup(content);
 		return (SO);
+	}
 	if (!ft_strcmp("WE\0", id) || !ft_strcmp("WE\n", id))
 		return (WE);
 	if (!ft_strcmp("EA\0", id) || !ft_strcmp("EA\n", id))
 		return (EA);
 	if (!ft_strcmp("F\0", id) || !ft_strcmp("F\n", id))
+	{
+		get_color(content, F, cub);
 		return (F);
+	}
 	if (!ft_strcmp("C\0", id) || !ft_strcmp("C\n", id))
 		return (C);
 	else

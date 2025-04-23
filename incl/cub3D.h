@@ -60,6 +60,10 @@ typedef struct	s_cub
 	int				col;
 	int				line_count;
 	int				id_count;
+	char			*north;
+	char			*south;
+	char			*west;
+	char			*east;
 	t_rgb			floor;
 	t_rgb			ceiling;
 	mlx_texture_t	*north;

@@ -44,7 +44,9 @@ static int	get_color(char *color_info, int location, t_cub *cub)
 	char	**rgb;
 	t_rgb	*color;
 
-	if (location == FLOOR)
+	if (cub->floor.r != -1)
+		return (err(MULTI_COLOR_ID), FAIL);
+	if (location == F)
 		color = &(cub->floor);
 	else
 		color = &(cub->ceiling);
@@ -67,14 +69,14 @@ int	set_floor_ceiling(char *id, char *color_info, t_cub *cub)
 	if (!ft_strcmp("F\0", id))
 	{
 		if (cub->floor.r != -1)
-			return (err(MULTI_COLOR_ID), FAIL);
-		return (get_color(color_info, FLOOR, cub));
+
+		return (get_color(color_info, F, cub));
 	}
 	else if (!ft_strcmp("C\0", id))
 	{
 		if (cub->ceiling.r != -1)
 			return (err(MULTI_COLOR_ID), FAIL);
-		return (get_color(color_info, CEILING, cub));
+		return (get_color(color_info, C, cub));
 	}
 	return (err(NO_ID), FAIL);
 }
