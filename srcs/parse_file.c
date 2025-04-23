@@ -1,27 +1,51 @@
 #include "../incl/cub3D.h"
 
-static int	get_data(t_cub *cub)
+static int	label_ids(char *id, char *content, t_cub *cub)
+{
+	if (!ft_strcmp("NO\0", id) || !ft_strcmp("NO\n", id))
+		return (NO);
+	if (!ft_strcmp("SO\0", id) || !ft_strcmp("SO\n", id))
+		return (SO);
+	if (!ft_strcmp("WE\0", id) || !ft_strcmp("WE\n", id))
+		return (WE);
+	if (!ft_strcmp("EA\0", id) || !ft_strcmp("EA\n", id))
+		return (EA);
+	if (!ft_strcmp("F\0", id) || !ft_strcmp("F\n", id))
+		return (F);
+	if (!ft_strcmp("C\0", id) || !ft_strcmp("C\n", id))
+		return (C);
+	else
+		return (NONE);
+}
+
+static void	get_data(t_cub *cub)
 {
 	int		i;
 	int		j;
-	char	**split_line;
+	char	**words;
+	int		id_type;
 
 	i = -1;
 	while (cub->data[++i])
 	{
-		split_line = ft_split(cub->data[i], ' ');
-		if (!split_line)
+		words = ft_split(cub->data[i], ' ');
+		if (!words)
 		{
 			free_data(cub);
 			exit(1);
 		}
-		if (parse_line(split_line, cub) == FAIL)
+		id_type = label_ids(words[0], words[1], cub);
+		if (id_type != NONE)
+			cub->id_count++;
+		if (cub->id_count == 6 && id_type == NONE)
+			return (validate_map(words, cub));
+		if (parse_line(words, cub) == FAIL)
 		{
-			free_split(split_line);
+			free_split(words);
 			free_data(cub);
 			exit(1);
 		}
-		free_split(split_line);
+		free_split(words);
 	}
 }
 

@@ -1,6 +1,6 @@
 #include "../incl/cub3D.h"
 
-static int	set_texture(char *path, mlx_texture_t **texture)
+static int	load_texture(char *path, mlx_texture_t **texture)
 {
 	*texture = mlx_load_png(path);
 	free(texture);
@@ -53,4 +53,7 @@ int	parse_line(char **split_line, t_cub *cub)
 	}
 	if (get_texture(split_line[0], split_line[1], cub) == FAIL)
 		return (FAIL);
+	if (split_line[2] && split_line[2][0] != '\n')
+		return (err(EXTRA_VALUE), FAIL);
+	return (SUCCESS);
 }

@@ -17,16 +17,23 @@
 # define BLUE	"\e[34m"
 # define END	"\e[0m"
 
-# define FLOOR 1
-# define CEILING 2
+# define NO 1
+# define SO 2
+# define WE 3
+# define EA 4
+# define F 5
+# define C 6
+# define NONE 7
 
 # define EXTRA_RGB "Too many RGB values found"
+# define EXTRA_VALUE "Identifier followed by too many values"
 # define FILE_NOT_CUB "Please provide a valid .cub file"
 # define FILE_OPEN_ERROR "Couldn't open map file"
 # define MALLOC_INPUT_FILE "Memory allocation for the input data failed"
 # define MALLOC_FILE_LINE "Failed to store input file line"
 # define MAP_TOO_BIG "The map is too big"
 # define MAP_MISSING "Map is missing"
+# define MAP_NOT_LAST "Map placed before declaring other identifiers"
 # define MAP_WALLS "Map not fully enclosed with walls"
 # define MULTI_COLOR_ID "Multiple color identifiers found"
 # define MULTI_WALL_ID "Too many wall texture identifiers found"
