@@ -7,5 +7,4 @@ void	err(char *msg)
 		printf("%s\n", mlx_strerror(mlx_errno));
 	else if (msg)
 		printf("%s\n", msg);
-	exit (1);
 }

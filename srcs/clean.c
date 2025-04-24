@@ -1,6 +1,6 @@
 #include "../incl/cub3D.h"
 
-void	free_data(t_cub *cub)
+void	free_cub(t_cub *cub)
 {
 	int	i;
 
@@ -15,6 +15,13 @@ void	free_data(t_cub *cub)
 	}
 	free(cub->data);
 	cub->data = NULL;
+}
+
+void	free_exit(t_cub *cub, char **split)
+{
+	free_split(split);
+	free_cub(cub);
+	exit(1);
 }
 
 void	free_split(char **split)

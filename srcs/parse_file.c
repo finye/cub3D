@@ -1,30 +1,66 @@
 #include "../incl/cub3D.h"
 
-static int	label_ids(char *id, char *content, t_cub *cub)
+static int store_identifiers(char *content, int type, t_cub *cub)
 {
-	if (!ft_strcmp("NO\0", id) || !ft_strcmp("NO\n", id))
+	if (type != NONE && !content)
+		return (err(NO_CONTENT), FAIL);
+	if (content && type != NONE)
 	{
-		cub->north = ft_strdup(content);
-		return (NO);
+		cub->id_count++;
+		if (type == NO)
+			cub->north = ft_strdup(content);
+		if (type == SO)
+			cub->south = ft_strdup(content);
+		if (type == WE)
+			cub->west = ft_strdup(content);
+		if (type == EA)
+			cub->east = ft_strdup(content);
+		if (type == F || type == C)
+		{
+			if (get_color(content, type, cub) == FAIL)
+				return (FAIL);
+		}
 	}
-	if (!ft_strcmp("SO\0", id) || !ft_strcmp("SO\n", id))
-	{
-		cub->south = ft_strdup(content);
-		return (SO);
-	}
-	if (!ft_strcmp("WE\0", id) || !ft_strcmp("WE\n", id))
-		return (WE);
-	if (!ft_strcmp("EA\0", id) || !ft_strcmp("EA\n", id))
-		return (EA);
-	if (!ft_strcmp("F\0", id) || !ft_strcmp("F\n", id))
-	{
-		get_color(content, F, cub);
-		return (F);
-	}
-	if (!ft_strcmp("C\0", id) || !ft_strcmp("C\n", id))
-		return (C);
+	return (SUCCESS);
+}
+
+static int	check_id_duplicates(int type, t_cub *cub)
+{
+	if (type == NO && cub->north)
+		return (err(MULTI_WALL_ID), FAIL);
+	if (type == SO && cub->south)
+		return (err(MULTI_WALL_ID), FAIL);
+	if (type == WE && cub->west)
+		return (err(MULTI_WALL_ID), FAIL);
+	if (type == EA && cub->east)
+		return (err(MULTI_WALL_ID), FAIL);
+	if (type == F && cub->floor.r != -1)
+		return (err(MULTI_COLOR_ID), FAIL);
+	if (type == C && cub->ceiling.r != -1)
+		return (err(MULTI_COLOR_ID), FAIL);
 	else
-		return (NONE);
+		return (SUCCESS);
+}
+
+static int	label_identifiers(char *id, t_cub *cub)
+{
+	if (id)
+	{
+		if (!ft_strcmp("NO\0", id) || !ft_strcmp("NO\n", id))
+			return (NO);
+		if (!ft_strcmp("SO\0", id) || !ft_strcmp("SO\n", id))
+			return (SO);
+		if (!ft_strcmp("WE\0", id) || !ft_strcmp("WE\n", id))
+			return (WE);
+		if (!ft_strcmp("EA\0", id) || !ft_strcmp("EA\n", id))
+			return (EA);
+		if (!ft_strcmp("F\0", id) || !ft_strcmp("F\n", id))
+			return (F);
+		if (!ft_strcmp("C\0", id) || !ft_strcmp("C\n", id))
+			return (C);
+		else
+			return (NONE);
+	}
 }
 
 static void	get_data(t_cub *cub)
@@ -39,21 +75,19 @@ static void	get_data(t_cub *cub)
 	{
 		words = ft_split(cub->data[i], ' ');
 		if (!words)
+			free_exit(cub, NULL);
+		id_type = label_identifiers(words[0], cub);
+		if (check_id_duplicates(id_type, cub) == FAIL)
+			free_exit(cub, words);
+		if (store_identifiers(words[1], id_type, cub) == FAIL);
+			free_exit(cub, words);
+		if (cub->id_count != 6 && (words[0][0] == '1' || id_type == NONE))
 		{
-			free_data(cub);
-			exit(1);
+			err(MAP_NOT_LAST);
+			free_exit(cub, words);
 		}
-		id_type = label_ids(words[0], words[1], cub);
-		if (id_type != NONE)
-			cub->id_count++;
-		if (cub->id_count == 6 && id_type == NONE)
-			return (validate_map(words, cub));
-		if (parse_line(words, cub) == FAIL)
-		{
-			free_split(words);
-			free_data(cub);
-			exit(1);
-		}
+		if (cub->id_count == 6 && id_type == NONE && parse_map(i, cub) == FAIL)
+			free_exit(cub, words);
 		free_split(words);
 	}
 }

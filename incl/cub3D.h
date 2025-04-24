@@ -31,6 +31,8 @@
 # define FILE_OPEN_ERROR "Couldn't open map file"
 # define MALLOC_INPUT_FILE "Memory allocation for the input data failed"
 # define MALLOC_FILE_LINE "Failed to store input file line"
+# define MALLOC_MAP "Failed to allocate memory for the map"
+# define MALLOC_MAP_LINE "Failed to store individual map line"
 # define MAP_TOO_BIG "The map is too big"
 # define MAP_MISSING "Map is missing"
 # define MAP_NOT_LAST "Map placed before declaring other identifiers"
@@ -39,10 +41,14 @@
 # define MULTI_WALL_ID "Too many wall texture identifiers found"
 # define NO_ARG "Path to a valid map file missing"
 # define NO_ID "No valid identifier found"
+# define NO_CONTENT "Missing content after identifier(s)"
 # define NO_TEXTURE_PATH "No path provided for wall texture"
 # define NOT_ID "Identifier missing or invalid syntax"
 # define TOO_MANY_ARGS "Too many arguments"
 # define WRONG_RGB_VALUE "Invalid RGB value(s)"
+
+const static int	g_max_map_height = 500;
+const static int	g_max_map_width = 500;
 
 typedef struct	s_rbg
 {
@@ -51,36 +57,41 @@ typedef struct	s_rbg
 	int	b;
 }	t_rgb;
 
+typedef struct	s_map
+{
+	char	**arr;
+	int		height;
+	int		width;
+}	t_map;
+
 typedef struct	s_cub
 {
-	char			**data;
-	char			*path;
-	int				fd;
-	int				line;
-	int				col;
-	int				line_count;
-	int				id_count;
-	char			*north;
-	char			*south;
-	char			*west;
-	char			*east;
-	t_rgb			floor;
-	t_rgb			ceiling;
-	mlx_texture_t	*north;
-	mlx_texture_t	*south;
-	mlx_texture_t	*west;
-	mlx_texture_t	*east;
+	char	**data;
+	char	*path;
+	int		fd;
+	int		line;
+	int		col;
+	int		line_count;
+	int		id_count;
+	char	*north;
+	char	*south;
+	char	*west;
+	char	*east;
+	t_map	map;
+	t_rgb	floor;
+	t_rgb	ceiling;
 }	t_cub;
 
 // clean
 void	free_data(t_cub *cub);
+void	free_exit(t_cub *cub, char **split);
 void	free_split(char **split);
 
 // error
 void	err(char *msg);
 
 // floor & ceiling
-int		set_floor_ceiling(char *id, char *color_info, t_cub *cub);
+int		get_color(char *color_info, int location, t_cub *cub);
 
 // init
 void	init(t_cub *cub, int fd, char *path);

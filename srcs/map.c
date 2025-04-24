@@ -1,11 +1,67 @@
 #include "../incl/cub3D.h"
 
-/* int	validate_map(t_cub *cub)
+static int	allocate_line(int i, t_cub *cub)
 {
-	if (cub->id_count != 6 && split_line[0][0] == '1')
-		return (err(MAP_NOT_LAST));
-	if (!cub->map)
-		return (err(MAP_MISSING), FAIL);
-	if (check_walls(cub) == FAIL)
-		return (err(MAP_WALLS), FAIL);
-} */
+	cub->map.arr[i] = malloc(sizeof(char) * (cub->map.width + 1));
+	if (!cub->map.arr[i])
+	{
+		while (--i >= 0)
+			free(cub->map.arr[i]);
+		free(cub->map.arr);
+		return (FAIL);
+	}
+}
+
+static int	store_map_lines(int	current_line, t_cub *cub)
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	while (++i < cub->map.height)
+	{
+		if (allocate_line(i, cub) == FAIL)
+			return (FAIL);
+		j = 0;
+		while (cub->data[current_line + i][j] && j < cub->map.width)
+		{
+			if (cub->data[current_line + i][j] == ' ')
+				cub->map.arr[i][j] = ' ';
+			else
+				cub->map.arr[i][j] = cub->data[current_line + i][j];
+			j++;
+		}
+		while (j < cub->map.width)
+			cub->map.arr[i][j++] = ' ';
+		cub->map.arr[i][j] = '\0';
+	}
+	cub->map.arr[cub->map.height] = NULL;
+	return (SUCCESS);
+}
+
+static void	get_map_dimensions(int i, t_cub *cub)
+{
+	int	line_len;
+
+	while (cub->data[i])
+	{
+		line_len = ft_strlen(cub->data[i]);
+		if (line_len > cub->map.width)
+			cub->map.width = line_len;
+		cub->map.height++;
+		i++;
+	}
+}
+
+int	parse_map(int current_line, t_cub *cub)
+{
+	get_map_dimensions(current_line, cub);
+	if (cub->map.width > g_max_map_width || cub->map.height > g_max_map_height)
+		//GTFO
+	if (!cub->map.arr)
+		cub->map.arr = malloc(sizeof(char *) * (cub->map.height + 1));
+	if (!cub->map.arr)
+		return (err(MALLOC_MAP), FAIL);
+	if (store_map_lines(current_line, cub) == FAIL)
+		return (err(MALLOC_MAP_LINE), FAIL);
+}

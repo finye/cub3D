@@ -39,7 +39,7 @@ static int	set_rgb(t_rgb *color, char **rgb)
 	return (SUCCESS);
 }
 
-static int	get_color(char *color_info, int location, t_cub *cub)
+int	get_color(char *color_info, int location, t_cub *cub)
 {
 	char	**rgb;
 	t_rgb	*color;
@@ -60,23 +60,5 @@ static int	get_color(char *color_info, int location, t_cub *cub)
 		free_split(rgb);
 		return (err(EXTRA_RGB), FAIL);
 	}
-	cub->id_count++;
-	return (free_split(rgb), FAIL);
-}
-
-int	set_floor_ceiling(char *id, char *color_info, t_cub *cub)
-{
-	if (!ft_strcmp("F\0", id))
-	{
-		if (cub->floor.r != -1)
-
-		return (get_color(color_info, F, cub));
-	}
-	else if (!ft_strcmp("C\0", id))
-	{
-		if (cub->ceiling.r != -1)
-			return (err(MULTI_COLOR_ID), FAIL);
-		return (get_color(color_info, C, cub));
-	}
-	return (err(NO_ID), FAIL);
+	return (free_split(rgb), SUCCESS);
 }
