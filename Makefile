@@ -4,11 +4,13 @@ SRC_DIR = srcs
 SRCS = $(addprefix $(SRC_DIR)/, \
 			clean.c \
 			error.c \
-			floor_ceiling.g \
+			floor_ceiling.c \
 			init.c \
 			main.c \
 			parse_file.c \
-			parse_line.c)
+			parse_line.c \
+			store_map.c \
+			validate_map.c)
 
 OBJ_DIR =	objs
 OBJS =		$(SRCS:$(SRC_DIR)%.c=$(OBJ_DIR)/%.o)

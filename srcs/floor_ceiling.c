@@ -22,20 +22,20 @@ static int	atoi_color(char *color)
 
 static int	set_rgb(t_rgb *color, char **rgb)
 {
-	int	color;
+	int	rgb_value;
 
-	color = atoi_color(rgb[0]);
-	if (color == ERROR)
+	rgb_value = atoi_color(rgb[0]);
+	if (rgb_value == ERROR)
 		return (err(WRONG_RGB_VALUE), FAIL);
-	color->r = color;
-	color = atoi_color(rgb[1]);
-	if (color == ERROR)
+	color->r = rgb_value;
+	rgb_value = atoi_color(rgb[1]);
+	if (rgb_value == ERROR)
 		return (err(WRONG_RGB_VALUE), FAIL);
-	color->g = color;
-	color = atoi_color(rgb[2]);
-	if (color == ERROR)
+	color->g = rgb_value;
+	rgb_value = atoi_color(rgb[2]);
+	if (rgb_value == ERROR)
 		return (err(WRONG_RGB_VALUE), FAIL);
-	color->b = color;
+	color->b = rgb_value;
 	return (SUCCESS);
 }
 
@@ -44,7 +44,7 @@ int	get_color(char *color_info, int location, t_cub *cub)
 	char	**rgb;
 	t_rgb	*color;
 
-	if (cub->floor.r != -1)
+	if ((location == F && cub->floor.r != -1) || (location == C && cub->ceiling.r != -1))
 		return (err(MULTI_COLOR_ID), FAIL);
 	if (location == F)
 		color = &(cub->floor);

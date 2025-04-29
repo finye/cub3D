@@ -2,8 +2,8 @@
 
 static void	init_map(t_cub *cub)
 {
-	cub->map.height = -1;
-	cub->map.width = -1;
+	cub->map.height = 0;
+	cub->map.width = 0;
 }
 
 static void	init_rgb(t_cub *cub)
@@ -25,6 +25,7 @@ void	init(t_cub *cub, int fd, char *path)
 	cub->line_count = 0;
 	cub->path = path;
 	cub->id_count = 0;
+	cub->all_ids = false;
 	cub->north = NULL;
 	cub->south = NULL;
 	cub->west = NULL;

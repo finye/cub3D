@@ -10,6 +10,7 @@ static int	allocate_line(int i, t_cub *cub)
 		free(cub->map.arr);
 		return (FAIL);
 	}
+	return (SUCCESS);
 }
 
 static int	store_map_lines(int	current_line, t_cub *cub)
@@ -43,6 +44,8 @@ static void	get_map_dimensions(int i, t_cub *cub)
 {
 	int	line_len;
 
+	cub->map.height = 0;
+	cub->map.width = 0;
 	while (cub->data[i])
 	{
 		line_len = ft_strlen(cub->data[i]);
@@ -53,15 +56,16 @@ static void	get_map_dimensions(int i, t_cub *cub)
 	}
 }
 
-int	parse_map(int current_line, t_cub *cub)
+int	store_map(int current_line, t_cub *cub)
 {
 	get_map_dimensions(current_line, cub);
 	if (cub->map.width > g_max_map_width || cub->map.height > g_max_map_height)
-		//GTFO
-	if (!cub->map.arr)
-		cub->map.arr = malloc(sizeof(char *) * (cub->map.height + 1));
+		return(err(MAP_TOO_BIG), FAIL);
+	cub->map.arr = NULL;
+	cub->map.arr = malloc(sizeof(char *) * (cub->map.height + 1));
 	if (!cub->map.arr)
 		return (err(MALLOC_MAP), FAIL);
 	if (store_map_lines(current_line, cub) == FAIL)
 		return (err(MALLOC_MAP_LINE), FAIL);
+	return (SUCCESS);
 }

@@ -1,4 +1,4 @@
-#include "../incl/cub3D.h"
+/* #include "../incl/cub3D.h"
 
 static int	load_texture(char *path, mlx_texture_t **texture)
 {
@@ -57,3 +57,4 @@ int	parse_line(char **split_line, t_cub *cub)
 		return (err(EXTRA_VALUE), FAIL);
 	return (SUCCESS);
 }
+ */

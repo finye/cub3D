@@ -7,6 +7,8 @@ static int store_identifiers(char *content, int type, t_cub *cub)
 	if (content && type != NONE)
 	{
 		cub->id_count++;
+		if (cub->id_count == 6)
+			cub->all_ids = true;
 		if (type == NO)
 			cub->north = ft_strdup(content);
 		if (type == SO)
@@ -42,10 +44,11 @@ static int	check_id_duplicates(int type, t_cub *cub)
 		return (SUCCESS);
 }
 
-static int	label_identifiers(char *id, t_cub *cub)
+static int	label_identifiers(char *id)
 {
 	if (id)
 	{
+		printf("current identifier: %s\n", id);
 		if (!ft_strcmp("NO\0", id) || !ft_strcmp("NO\n", id))
 			return (NO);
 		if (!ft_strcmp("SO\0", id) || !ft_strcmp("SO\n", id))
@@ -58,15 +61,13 @@ static int	label_identifiers(char *id, t_cub *cub)
 			return (F);
 		if (!ft_strcmp("C\0", id) || !ft_strcmp("C\n", id))
 			return (C);
-		else
-			return (NONE);
 	}
+	return (NONE);
 }
 
 static void	get_data(t_cub *cub)
 {
 	int		i;
-	int		j;
 	char	**words;
 	int		id_type;
 
@@ -76,20 +77,20 @@ static void	get_data(t_cub *cub)
 		words = ft_split(cub->data[i], ' ');
 		if (!words)
 			free_exit(cub, NULL);
-		id_type = label_identifiers(words[0], cub);
+		id_type = label_identifiers(words[0]);
 		if (check_id_duplicates(id_type, cub) == FAIL)
 			free_exit(cub, words);
-		if (store_identifiers(words[1], id_type, cub) == FAIL);
+		if (store_identifiers(words[1], id_type, cub) == FAIL)
 			free_exit(cub, words);
-		if (cub->id_count != 6 && (words[0][0] == '1' || id_type == NONE))
-		{
-			err(MAP_NOT_LAST);
+		if (!cub->all_ids && words[0][0] == '1' && !id_type)
+			map_not_last(cub, words);
+		if (cub->all_ids && !id_type && words[0][0] == '1' && store_map(i, cub) == FAIL)
 			free_exit(cub, words);
-		}
-		if (cub->id_count == 6 && id_type == NONE && parse_map(i, cub) == FAIL)
-			free_exit(cub, words);
+		if (cub->all_ids && !id_type && words[0][0] == '1' && !store_map(i, cub))
+			break ;
 		free_split(words);
 	}
+	free_split(words);
 }
 
 static void	count_lines(t_cub *cub)
@@ -119,7 +120,7 @@ static void	store_input_file(t_cub *cub)
 		cub->data[cub->line] = ft_calloc(ft_strlen(line) + 1, sizeof(char));
 		if (!cub->data[cub->line])
 		{
-			free_data(cub);
+			free_cub(cub);
 			return (err(MALLOC_FILE_LINE));
 		}
 		while (line[i] != '\0')

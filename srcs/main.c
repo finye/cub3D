@@ -33,7 +33,7 @@ int	main(int ac, char **av)
 	fd = open_file(av[1]);
 	init(&cub, fd, av[1]);
 	parse_file(&cub);
-	/* if (validate_map(&cub) == FAIL);
-		return (FAIL); */
+	if (validate_map(&cub) == FAIL)
+		return (FAIL);
 	return (SUCCESS);
 }

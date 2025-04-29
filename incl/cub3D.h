@@ -17,18 +17,19 @@
 # define BLUE	"\e[34m"
 # define END	"\e[0m"
 
+# define NONE 0
 # define NO 1
 # define SO 2
 # define WE 3
 # define EA 4
 # define F 5
 # define C 6
-# define NONE 7
 
 # define EXTRA_RGB "Too many RGB values found"
 # define EXTRA_VALUE "Identifier followed by too many values"
 # define FILE_NOT_CUB "Please provide a valid .cub file"
 # define FILE_OPEN_ERROR "Couldn't open map file"
+# define FORBIDDEN_CHARS "Map contains forbidden characters"
 # define MALLOC_INPUT_FILE "Memory allocation for the input data failed"
 # define MALLOC_FILE_LINE "Failed to store input file line"
 # define MALLOC_MAP "Failed to allocate memory for the map"
@@ -73,6 +74,7 @@ typedef struct	s_cub
 	int		col;
 	int		line_count;
 	int		id_count;
+	int		all_ids;
 	char	*north;
 	char	*south;
 	char	*west;
@@ -83,12 +85,13 @@ typedef struct	s_cub
 }	t_cub;
 
 // clean
-void	free_data(t_cub *cub);
+void	free_cub(t_cub *cub);
 void	free_exit(t_cub *cub, char **split);
 void	free_split(char **split);
 
 // error
 void	err(char *msg);
+void	map_not_last(t_cub *cub, char **words);
 
 // floor & ceiling
 int		get_color(char *color_info, int location, t_cub *cub);
@@ -98,6 +101,10 @@ void	init(t_cub *cub, int fd, char *path);
 
 // main
 int		open_file(char *file);
+
+// map
+int		store_map(int current_line, t_cub *cub);
+int		validate_map(t_cub *cub);
 
 // parse
 int		parse_file(t_cub *cub);
