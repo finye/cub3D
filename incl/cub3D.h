@@ -39,12 +39,14 @@
 # define MAP_NOT_LAST "Map placed before declaring other identifiers"
 # define MAP_WALLS "Map not fully enclosed with walls"
 # define MULTI_COLOR_ID "Multiple color identifiers found"
+# define MULTI_START "Multiple player starting positions found"
 # define MULTI_WALL_ID "Too many wall texture identifiers found"
 # define NO_ARG "Path to a valid map file missing"
 # define NO_ID "No valid identifier found"
 # define NO_CONTENT "Missing content after identifier(s)"
 # define NO_TEXTURE_PATH "No path provided for wall texture"
 # define NOT_ID "Identifier missing or invalid syntax"
+# define OUT_OF_BOUNDS "Player starting position out of bounds"
 # define TOO_MANY_ARGS "Too many arguments"
 # define WRONG_RGB_VALUE "Invalid RGB value(s)"
 
@@ -63,6 +65,11 @@ typedef struct	s_map
 	char	**arr;
 	int		height;
 	int		width;
+	bool	pos_found;
+	char	left;
+	char	right;
+	char	above;
+	char	below;
 }	t_map;
 
 typedef struct	s_cub

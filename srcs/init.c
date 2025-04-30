@@ -4,6 +4,11 @@ static void	init_map(t_cub *cub)
 {
 	cub->map.height = 0;
 	cub->map.width = 0;
+	cub->map.pos_found = false;
+	cub->map.above = 0;
+	cub->map.below = 0;
+	cub->map.left = 0;
+	cub->map.right = 0;
 }
 
 static void	init_rgb(t_cub *cub)
