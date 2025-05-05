@@ -8,8 +8,6 @@ static int	atoi_color(char *color)
 	error = 0;
 	if (!color)
 		return (ERROR);
-	if (!ft_isdigit(*color))
-		return (FAIL);
 	if (color[ft_strlen(color) - 1] == '\n')
 		color[ft_strlen(color) - 1] = '\0';
 	number = ft_atoi_err(color, &error);
@@ -44,7 +42,8 @@ int	get_color(char *color_info, int location, t_cub *cub)
 	char	**rgb;
 	t_rgb	*color;
 
-	if ((location == F && cub->floor.r != -1) || (location == C && cub->ceiling.r != -1))
+	if ((location == F && cub->floor.r != -1)
+		|| (location == C && cub->ceiling.r != -1))
 		return (err(MULTI_COLOR_ID), FAIL);
 	if (location == F)
 		color = &(cub->floor);

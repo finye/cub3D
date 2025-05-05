@@ -13,7 +13,7 @@ static int	allocate_line(int i, t_cub *cub)
 	return (SUCCESS);
 }
 
-static int	store_map_lines(int	current_line, t_cub *cub)
+static int	store_map_lines(int current_line, t_cub *cub)
 {
 	int	i;
 	int	j;
@@ -59,8 +59,8 @@ static void	get_map_dimensions(int i, t_cub *cub)
 int	store_map(int current_line, t_cub *cub)
 {
 	get_map_dimensions(current_line, cub);
-	if (cub->map.width > g_max_map_width || cub->map.height > g_max_map_height)
-		return(err(MAP_TOO_BIG), FAIL);
+	if (cub->map.width > MAX_WIDTH || cub->map.height > MAX_HEIGHT)
+		return (err(MAP_TOO_BIG), FAIL);
 	cub->map.arr = NULL;
 	cub->map.arr = malloc(sizeof(char *) * (cub->map.height + 1));
 	if (!cub->map.arr)

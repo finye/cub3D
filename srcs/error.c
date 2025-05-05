@@ -1,8 +1,27 @@
 #include "../incl/cub3D.h"
 
-void	map_not_last(t_cub *cub, char **words)
+void	extra_content(t_cub *cub, char **words)
 {
-	err(MAP_NOT_LAST);
+	if (cub->all_ids && words[0][0] == '0')
+	{
+		err(WALL_ERROR);
+		free_exit(cub, words);
+	}
+	if (!cub->all_ids && words[0][0] == '1')
+	{
+		err(MAP_NOT_LAST);
+		free_exit(cub, words);
+	}
+	else if (!cub->all_ids && !ft_isspace(words[0][0]))
+	{
+		err(EXTRA_CONTENT);
+		free_exit(cub, words);
+	}
+}
+
+void	map_section_missing(t_cub *cub, char **words)
+{
+	err(MAP_SECTION_MISSING);
 	free_exit(cub, words);
 }
 

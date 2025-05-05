@@ -8,9 +8,10 @@ SRCS = $(addprefix $(SRC_DIR)/, \
 			init.c \
 			main.c \
 			parse_file.c \
-			parse_line.c \
+			parse_identifiers.c \
 			store_map.c \
-			validate_map.c)
+			validate_map.c \
+			validate_texture.c)
 
 OBJ_DIR =	objs
 OBJS =		$(SRCS:$(SRC_DIR)%.c=$(OBJ_DIR)/%.o)

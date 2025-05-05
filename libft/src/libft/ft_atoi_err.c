@@ -6,7 +6,7 @@
 /*   By: eelaine <eelaine@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 15:27:55 by eelaine           #+#    #+#             */
-/*   Updated: 2025/04/22 15:46:03 by eelaine          ###   ########.fr       */
+/*   Updated: 2025/05/02 11:27:06 by eelaine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	ft_atoi_err(const char *str, int *error)
 		*error = 0;
 	atoi_prepare(&str, &sign);
 	result = digits(&str, sign, error, &has_digits);
-	if (*str != '\0' && error)
+	if (*str != '\0' && error && *error == 0)
 		*error = 2;
 	if (!has_digits)
 	{

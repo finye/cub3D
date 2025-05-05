@@ -1,0 +1,9 @@
+NO ./textures/north.png
+SO ./textures/south.png
+WE ./textures/west.png
+EA ./textures/east.png
+F 194,178,128
+C 135,206,235
+  1
+1 S 1
+  1

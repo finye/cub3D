@@ -1,0 +1,13 @@
+NO ./textures/no_permission.png
+SO ./textures/no_permission.png
+WE ./textures/no_permission.png
+EA ./textures/no_permission.png
+
+F 220,100,0
+C 225,30,0
+
+1111
+1001
+1001
+1N01
+1111

@@ -11,7 +11,10 @@ static void	validate_args(int ac, char **av)
 	len = ft_strlen(av[1]);
 	if (len < 5 || !ft_strnstr(&av[1][len - 4], ".cub", 4) ||
 			ft_strnstr(&av[1][len - 5], "/.cub", 5))
+	{
 		err(FILE_NOT_CUB);
+		exit(1);
+	}
 }
 
 int	open_file(char *file)
@@ -20,7 +23,10 @@ int	open_file(char *file)
 
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
+	{
 		err(FILE_OPEN_ERROR);
+		exit(1);
+	}
 	return (fd);
 }
 
@@ -32,7 +38,8 @@ int	main(int ac, char **av)
 	validate_args(ac, av);
 	fd = open_file(av[1]);
 	init(&cub, fd, av[1]);
-	parse_file(&cub);
+	if (parse_file(&cub) == FAIL)
+		return (FAIL);
 	if (validate_map(&cub) == FAIL)
 		return (FAIL);
 	return (SUCCESS);

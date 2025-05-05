@@ -7,6 +7,7 @@
 # include <errno.h>
 # include <fcntl.h>
 # include <stdio.h>
+# include <stdbool.h>
 
 # define SUCCESS 0
 # define FAIL 1
@@ -25,6 +26,8 @@
 # define F 5
 # define C 6
 
+# define EMPTY_FILE "File is empty"
+# define EXTRA_CONTENT "File contains extraneous content"
 # define EXTRA_RGB "Too many RGB values found"
 # define EXTRA_VALUE "Identifier followed by too many values"
 # define FILE_NOT_CUB "Please provide a valid .cub file"
@@ -36,6 +39,7 @@
 # define MALLOC_MAP_LINE "Failed to store individual map line"
 # define MAP_TOO_BIG "The map is too big"
 # define MAP_MISSING "Map is missing"
+# define MAP_SECTION_MISSING "Map section missing from input file"
 # define MAP_NOT_LAST "Map placed before declaring other identifiers"
 # define MAP_WALLS "Map not fully enclosed with walls"
 # define MULTI_COLOR_ID "Multiple color identifiers found"
@@ -44,23 +48,26 @@
 # define NO_ARG "Path to a valid map file missing"
 # define NO_ID "No valid identifier found"
 # define NO_CONTENT "Missing content after identifier(s)"
+# define NO_PLAYER "Player starting position not found"
 # define NO_TEXTURE_PATH "No path provided for wall texture"
 # define NOT_ID "Identifier missing or invalid syntax"
 # define OUT_OF_BOUNDS "Player starting position out of bounds"
+# define TEXT_EXT "Wall texture has an invalid extension"
 # define TOO_MANY_ARGS "Too many arguments"
+# define WALL_ERROR "Map not fully surrounded by walls"
 # define WRONG_RGB_VALUE "Invalid RGB value(s)"
 
-const static int	g_max_map_height = 500;
-const static int	g_max_map_width = 500;
+# define MAX_HEIGHT 500
+# define MAX_WIDTH 500
 
-typedef struct	s_rbg
+typedef struct s_rbg
 {
 	int	r;
 	int	g;
 	int	b;
 }	t_rgb;
 
-typedef struct	s_map
+typedef struct s_map
 {
 	char	**arr;
 	int		height;
@@ -72,7 +79,7 @@ typedef struct	s_map
 	char	below;
 }	t_map;
 
-typedef struct	s_cub
+typedef struct s_cub
 {
 	char	**data;
 	char	*path;
@@ -98,7 +105,8 @@ void	free_split(char **split);
 
 // error
 void	err(char *msg);
-void	map_not_last(t_cub *cub, char **words);
+void	extra_content(t_cub *cub, char **words);
+void	map_section_missing(t_cub *cub, char **words);
 
 // floor & ceiling
 int		get_color(char *color_info, int location, t_cub *cub);
@@ -114,7 +122,12 @@ int		store_map(int current_line, t_cub *cub);
 int		validate_map(t_cub *cub);
 
 // parse
+int		check_id_duplicates(int type, t_cub *cub, char *extra);
 int		parse_file(t_cub *cub);
-int		parse_line(char **split_line, t_cub *cub);
+int		label_identifiers(char *id);
+int		store_identifiers(char *content, int type, t_cub *cub);
+
+//texture
+int		validate_texture(char *content);
 
 #endif
