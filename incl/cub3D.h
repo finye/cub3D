@@ -99,7 +99,7 @@ int		open_file(char *file);
 
 // render map
 void	render_map(t_map *m);
-void	game_keyhook(mlx_key_data_t keydata, void *param);
+void	game_keyhook(void *param);
 void	cast_all_rays(void *param);
 // parse
 int		parse_file(t_cub *cub);

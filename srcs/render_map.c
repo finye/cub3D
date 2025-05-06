@@ -38,7 +38,7 @@ void init_map(t_map *m)
 	m->player_dir_x = 1.0;
 	m->player_dir_y = 0.0;
 	m->rot_speed = 0.05;
-	m->move_speed = 0.5;
+	m->move_speed = 0.1;
 	m->camera_x = 0.0;
 	m->player_pos_x = m->player_coord.x + 0.5;
 	m->player_pos_y = m->player_coord.y + 0.5;
@@ -67,7 +67,7 @@ static void	move_player(double dir_x, double dir_y, t_map *m)
 	}
 }
 
-void	game_keyhook(mlx_key_data_t keydata, void *param)
+void	game_keyhook(void *param)
 {
 	t_map	*m;
 	double	old_dir_x;
@@ -76,36 +76,32 @@ void	game_keyhook(mlx_key_data_t keydata, void *param)
 	m = (t_map *)param;
 	old_dir_x = m->player_dir_x;
 	old_plane_x = m->camera_plane_x;
-	if (keydata.action == MLX_PRESS)
+	if (mlx_is_key_down(m->mlx, MLX_KEY_ESCAPE))
 	{
-		if (keydata.key == MLX_KEY_ESCAPE)
-		{
-			ft_printf("Moi Moi!!\n");
-			mlx_close_window(m->mlx);
-			return;
-		}
-		if(keydata.key == MLX_KEY_A)
-			move_player(-m->camera_plane_x, -m->camera_plane_y, m);
-		else if (keydata.key == MLX_KEY_D)
-			move_player(m->camera_plane_x, m->camera_plane_y, m);
-		else if (keydata.key == MLX_KEY_S)
-			move_player(-m->player_dir_x, -m->player_dir_y, m);
-		else if (keydata.key == MLX_KEY_W)
-			move_player(m->player_dir_x, m->player_dir_y, m);
-		else if (keydata.key == MLX_KEY_LEFT)
-		{
-			m->player_dir_x  = m->player_dir_x  * cos(m->rot_speed) - m->player_dir_y * sin(m->rot_speed);
-			m->player_dir_y = old_dir_x * sin(m->rot_speed) + m->player_dir_y * cos(m->rot_speed);
-			m->camera_plane_x = m->camera_plane_x * cos(m->rot_speed) - m->camera_plane_y * sin(m->rot_speed);
-			m->camera_plane_y = old_plane_x * sin(m->rot_speed) + m->camera_plane_y * cos(m->rot_speed);
-		}
-		else if(keydata.key == MLX_KEY_RIGHT)
-		{
-			m->player_dir_x  = m->player_dir_x * cos(-(m->rot_speed)) - m->player_dir_y * sin(-(m->rot_speed));
-			m->player_dir_y = old_dir_x * sin(-(m->rot_speed)) + m->player_dir_y * cos(-(m->rot_speed));
-			m->camera_plane_x = m->camera_plane_x * cos(-(m->rot_speed)) - m->camera_plane_y * sin(-(m->rot_speed));
-			m->camera_plane_y = old_plane_x * sin(-(m->rot_speed)) + m->camera_plane_y * cos(-(m->rot_speed));
-		}
+		ft_printf("Moi Moi!!\n");
+		mlx_close_window(m->mlx);
+	}
+	if (mlx_is_key_down(m->mlx, MLX_KEY_A))
+		move_player(-m->camera_plane_x, -m->camera_plane_y, m);
+	if (mlx_is_key_down(m->mlx, MLX_KEY_D))
+		move_player(m->camera_plane_x, m->camera_plane_y, m);
+	if (mlx_is_key_down(m->mlx, MLX_KEY_S))
+		move_player(-m->player_dir_x, -m->player_dir_y, m);
+	if (mlx_is_key_down(m->mlx, MLX_KEY_W))
+		move_player(m->player_dir_x, m->player_dir_y, m);
+	if (mlx_is_key_down(m->mlx, MLX_KEY_LEFT))
+	{
+		m->player_dir_x  = m->player_dir_x  * cos(m->rot_speed) - m->player_dir_y * sin(m->rot_speed);
+		m->player_dir_y = old_dir_x * sin(m->rot_speed) + m->player_dir_y * cos(m->rot_speed);
+		m->camera_plane_x = m->camera_plane_x * cos(m->rot_speed) - m->camera_plane_y * sin(m->rot_speed);
+		m->camera_plane_y = old_plane_x * sin(m->rot_speed) + m->camera_plane_y * cos(m->rot_speed);
+	}
+	if (mlx_is_key_down(m->mlx, MLX_KEY_RIGHT))
+	{
+		m->player_dir_x  = m->player_dir_x * cos(-(m->rot_speed)) - m->player_dir_y * sin(-(m->rot_speed));
+		m->player_dir_y = old_dir_x * sin(-(m->rot_speed)) + m->player_dir_y * cos(-(m->rot_speed));
+		m->camera_plane_x = m->camera_plane_x * cos(-(m->rot_speed)) - m->camera_plane_y * sin(-(m->rot_speed));
+		m->camera_plane_y = old_plane_x * sin(-(m->rot_speed)) + m->camera_plane_y * cos(-(m->rot_speed));
 	}
 }
 
