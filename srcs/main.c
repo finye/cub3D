@@ -35,7 +35,9 @@ int	main(int ac, char **av)
 	init(&cub, fd, av[1]);
 	parse_file(&cub);
 	render_map(&m);
+	mlx_loop_hook(m.mlx, &cast_all_rays, &m);
 	mlx_key_hook(m.mlx, &game_keyhook, &m);
 	mlx_loop(m.mlx);
+	mlx_terminate(m.mlx);
 	return (0);
 }
