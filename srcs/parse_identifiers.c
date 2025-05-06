@@ -20,11 +20,8 @@ int	store_identifiers(char *content, int type, t_cub *cub)
 		if ((type == EA || type == NO || type == SO || type == WE)
 			&& validate_texture(content) == FAIL)
 			return (FAIL);
-		if (type == F || type == C)
-		{
-			if (get_color(content, type, cub) == FAIL)
-				return (FAIL);
-		}
+		if ((type == F || type == C) && get_color(content, type, cub) == FAIL)
+			return (FAIL);
 	}
 	return (SUCCESS);
 }

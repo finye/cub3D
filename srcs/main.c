@@ -5,9 +5,15 @@ static void	validate_args(int ac, char **av)
 	size_t	len;
 
 	if (ac == 1)
+	{
 		err(NO_ARG);
+		exit(1);
+	}
 	if (ac > 2)
+	{
 		err(TOO_MANY_ARGS);
+		exit(1);
+	}
 	len = ft_strlen(av[1]);
 	if (len < 5 || !ft_strnstr(&av[1][len - 4], ".cub", 4) ||
 			ft_strnstr(&av[1][len - 5], "/.cub", 5))

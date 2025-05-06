@@ -72,7 +72,6 @@ re: fclean all
 
 valgrind:
 	valgrind --leak-check=full --show-reachable=yes --show-leak-kinds=all \
-	--track-origins=yes --track-fds=yes --trace-children=yes \
-	--suppressions=readline.supp -s ./cub3D
+	--track-origins=yes --track-fds=yes --trace-children=yes -s ./cub3D 
 
 .PHONY: all clean fclean re valgrind

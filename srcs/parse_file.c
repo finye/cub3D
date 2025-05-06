@@ -22,7 +22,7 @@ static void	get_data(t_cub *cub)
 			map_section_missing(cub, words);
 		if (cub->all_ids && !id && words[0] && store_map(i, cub) == FAIL)
 			free_exit(cub, words);
-		if (cub->all_ids && !id && words[0] && !store_map(i, cub) == SUCCESS)
+		if (cub->all_ids && !id && words[0] && store_map(i, cub) == SUCCESS)
 			break ;
 		free_split(words);
 	}
@@ -96,5 +96,47 @@ int	parse_file(t_cub *cub)
 	}
 	printf("\n\n");
 	get_data(cub);
+	if (load_all_textures(cub) == FAIL)
+		return (FAIL);
+	if (cub->north_tex)
+	{
+		printf(GREEN "North texture %s" END, cub->north);
+		printf("  - Width: %u\n", cub->north_tex->width);
+		printf("  - Height: %u\n", cub->north_tex->height);
+		printf("  - Pixels Address: %p\n", cub->north_tex->pixels);
+		printf("  - Status:" GREEN "LOADED SUCCESSFULLY\n" END);
+	}
+	else
+		printf("South texture: FAILED TO LOAD\n");
+	if (cub->south_tex)
+	{
+		printf(GREEN "South texture %s" END, cub->south);
+		printf("  - Width: %u\n", cub->south_tex->width);
+		printf("  - Height: %u\n", cub->south_tex->height);
+		printf("  - Pixels Address: %p\n", cub->south_tex->pixels);
+		printf("  - Status:" GREEN "LOADED SUCCESSFULLY\n" END);
+	}
+	else
+		printf("South texture: FAILED TO LOAD\n");
+	if (cub->west_tex)
+	{
+		printf(GREEN "West texture %s" END, cub->west);
+		printf("  - Width: %u\n", cub->west_tex->width);
+		printf("  - Height: %u\n", cub->west_tex->height);
+		printf("  - Pixels Address: %p\n", cub->west_tex->pixels);
+		printf("  - Status:" GREEN "LOADED SUCCESSFULLY\n" END);
+	}
+	else
+		printf("West texture: FAILED TO LOAD\n");
+	if (cub->east_tex)
+	{
+		printf(GREEN "East texture %s" END, cub->east);
+		printf("  - Width: %u\n", cub->east_tex->width);
+		printf("  - Height: %u\n", cub->east_tex->height);
+		printf("  - Pixels Address: %p\n", cub->east_tex->pixels);
+		printf("  - Status:" GREEN "LOADED SUCCESSFULLY\n" END);
+	}
+	else
+		printf("East texture: FAILED TO LOAD\n");
 	return (SUCCESS);
 }

@@ -53,6 +53,8 @@
 # define NOT_ID "Identifier missing or invalid syntax"
 # define OUT_OF_BOUNDS "Player starting position out of bounds"
 # define TEXT_EXT "Wall texture has an invalid extension"
+# define TEX_LOAD_FAIL "Failed to load texture png"
+# define TEXTURE_TRIM_FAIL "Failed to trim texture path"
 # define TOO_MANY_ARGS "Too many arguments"
 # define WALL_ERROR "Map not fully surrounded by walls"
 # define WRONG_RGB_VALUE "Invalid RGB value(s)"
@@ -81,21 +83,25 @@ typedef struct s_map
 
 typedef struct s_cub
 {
-	char	**data;
-	char	*path;
-	int		fd;
-	int		line;
-	int		col;
-	int		line_count;
-	int		id_count;
-	int		all_ids;
-	char	*north;
-	char	*south;
-	char	*west;
-	char	*east;
-	t_map	map;
-	t_rgb	floor;
-	t_rgb	ceiling;
+	char			**data;
+	char			*path;
+	int				fd;
+	int				line;
+	int				col;
+	int				line_count;
+	int				id_count;
+	int				all_ids;
+	char			*north;
+	char			*south;
+	char			*west;
+	char			*east;
+	mlx_texture_t	*north_tex;
+	mlx_texture_t	*south_tex;
+	mlx_texture_t	*west_tex;
+	mlx_texture_t	*east_tex;
+	t_map			map;
+	t_rgb			floor;
+	t_rgb			ceiling;
 }	t_cub;
 
 // clean
@@ -128,6 +134,8 @@ int		label_identifiers(char *id);
 int		store_identifiers(char *content, int type, t_cub *cub);
 
 //texture
+void	cleanup_textures(t_cub *cub);
+int		load_all_textures(t_cub *cub);
 int		validate_texture(char *content);
 
 #endif

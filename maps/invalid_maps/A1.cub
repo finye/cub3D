@@ -1,14 +1,13 @@
 NO ./textures/north.png
-SO ./textures/south.png
-WE ./textures/west.png
-EA ./textures/east.png
+SO ./textures/north.png
+WE ./textures/north.png
+EA ./textures/north.png
 	   
 F 40,10,10
 C 0,34,100
 
 
-
-	k01111
+11111
 11111
 11N11
 11111
