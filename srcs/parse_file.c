@@ -21,14 +21,12 @@ static void	get_data(t_cub *cub)
 		if (cub->all_ids && !cub->data[i + 1])
 			map_section_missing(cub, words);
 		if (cub->all_ids && !id && words[0] && store_map(i, cub) == SUCCESS)
-		{
-			free_split(words);
 			break ;
-		}
 		else if (cub->all_ids && !id && words[0] && store_map(i, cub) == FAIL)
 			free_exit(cub, words);
 		free_split(words);
 	}
+	free_split(words);
 }
 
 static int	count_lines(t_cub *cub)

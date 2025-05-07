@@ -15,16 +15,16 @@ static mlx_texture_t	*load_texture(t_cub *cub, char *path)
 	}
 	texture = mlx_load_png(trimmed_path);
 	free(trimmed_path);
-    if (!texture)
-    {
+	if (!texture)
+	{
 		free_exit(cub, NULL);
-        err(TEX_LOAD_FAIL);
-        return (NULL);
-    }
-    return (texture);
+		err(TEX_LOAD_FAIL);
+		return (NULL);
+	}
+	return (texture);
 }
 
-void cleanup_textures(t_cub *cub)
+void	cleanup_textures(t_cub *cub)
 {
 	if (cub->north_tex)
 		mlx_delete_texture(cub->north_tex);
@@ -42,16 +42,16 @@ void cleanup_textures(t_cub *cub)
 
 int	load_all_textures(t_cub *cub)
 {
-    cub->north_tex = load_texture(cub, cub->north);
-    cub->south_tex = load_texture(cub, cub->south);
-    cub->west_tex = load_texture(cub, cub->west);
-    cub->east_tex = load_texture(cub, cub->east);
-    if (!cub->north_tex || !cub->south_tex || !cub->west_tex || !cub->east_tex)
-    {
-        cleanup_textures(cub);
-        return (FAIL);
-    }
-    return (SUCCESS);
+	cub->north_tex = load_texture(cub, cub->north);
+	cub->south_tex = load_texture(cub, cub->south);
+	cub->west_tex = load_texture(cub, cub->west);
+	cub->east_tex = load_texture(cub, cub->east);
+	if (!cub->north_tex || !cub->south_tex || !cub->west_tex || !cub->east_tex)
+	{
+		cleanup_textures(cub);
+		return (FAIL);
+	}
+	return (SUCCESS);
 }
 
 int	validate_texture(char *content)
