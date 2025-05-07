@@ -63,6 +63,8 @@ typedef struct s_map
 	double		camera_x;
 	double		player_pos_x;
 	double		player_pos_y;
+	int			screen_wdt;
+	int			screen_hgt;
 }	t_map;
 
 typedef struct s_raycast

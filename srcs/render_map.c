@@ -42,6 +42,8 @@ void init_map(t_map *m)
 	m->camera_x = 0.0;
 	m->player_pos_x = m->player_coord.x + 0.5;
 	m->player_pos_y = m->player_coord.y + 0.5;
+	m->screen_wdt = 0;
+	m->screen_hgt = 0;
 }
 
 static void	move_player(double dir_x, double dir_y, t_map *m)
@@ -187,14 +189,14 @@ void	calc_wall_dimensions(t_map *m, t_raycast *ray)
 		ray->perp_wall_dist = (ray->side_dist_x - ray->delta_dist_x);
 	else
 		ray->perp_wall_dist = (ray->side_dist_y - ray->delta_dist_y);
-	ray->line_hgt = (int)(TILE_SZ * m->map_hgt / ray->perp_wall_dist);
+	ray->line_hgt = (int)(m->screen_hgt / ray->perp_wall_dist);
 	// lowest and highest pixel to fill in current stripe
-	ray->draw_start = -ray->line_hgt / 2 + TILE_SZ * m->map_hgt / 2;
+	ray->draw_start = -ray->line_hgt / 2 + m->screen_hgt / 2;
 	if (ray->draw_start < 0)
 		ray->draw_start = 0;
-	ray->draw_end = ray->line_hgt / 2 + TILE_SZ * m->map_hgt / 2;
-	if(ray->draw_end >= TILE_SZ * m->map_hgt)
-		ray->draw_end = TILE_SZ * m->map_hgt - 1;
+	ray->draw_end = ray->line_hgt / 2 + m->screen_hgt / 2;
+	if(ray->draw_end >= m->screen_hgt)
+		ray->draw_end = m->screen_hgt - 1;
 }
 
 void	draw_vertical_slice(t_map *m, t_raycast *ray, int screen_x)
@@ -221,7 +223,7 @@ void	draw_vertical_slice(t_map *m, t_raycast *ray, int screen_x)
 		ceiling_y++;
 	}
 	floor_y = ray->draw_end + 1;
-	while (floor_y < m->map_hgt * TILE_SZ)
+	while (floor_y < m->screen_hgt)
 	{
 		mlx_put_pixel(m->render_img, screen_x, floor_y, 0xFF6F61FF);
 		floor_y++;
@@ -245,20 +247,17 @@ void cast_all_rays(void *param)
 	int			i;
 	int			size;
 	uint32_t	*pixels;
-	int			screen_width;
 
 	m = (t_map *)param;
 	i = 0;
 	pixels = (uint32_t *)m->render_img->pixels;
-	//size = m->map_wdt * TILE_SZ * m->map_hgt * TILE_SZ;
 	size = m->render_img->width * m->render_img->height;
 	while (i < size)
 		 pixels[i++] = 0x000000FF;
 	i = 0;
-	screen_width = m->map_wdt * TILE_SZ;
-	while (i < screen_width)
+	while (i <  m->screen_wdt)
 	{
-		m->camera_x = 2 * i / (double)screen_width - 1; // x-coordinate in camera space
+		m->camera_x = 2 * i / (double)m->screen_wdt - 1; // x-coordinate in camera space
 		m->ray_dir_x = m->player_dir_x + m->camera_plane_x * m->camera_x;
 		m->ray_dir_y = m->player_dir_y + m->camera_plane_y * m->camera_x;
 		cast_single_ray(m, i);
@@ -266,16 +265,43 @@ void cast_all_rays(void *param)
 	}
 }
 
+void	set_window_size(t_map *m)
+{
+	mlx_t	*mlx;
+	int32_t	width;
+	int32_t	height;
+	mlx = mlx_init(1, 1, "temp_init", false);
+	if (!mlx)
+	{
+		printf("Failed to initialize mlx.\n");
+		//Todo: free and exit
+	}
+	mlx_get_monitor_size(0, &width, &height);
+	mlx_terminate(mlx);
+	m->screen_wdt = (int)(width * 2 / 3);
+	m->screen_hgt = (int)(height * 2 / 3);
+}
+
 void	render_map(t_map *m)
 {
 	init_map(m);
+	set_window_size(m);
 	mlx_set_setting(MLX_STRETCH_IMAGE, 1);
-	m->mlx = mlx_init(m->map_wdt * TILE_SZ, m->map_hgt * TILE_SZ, "cub3D", true);
+	m->mlx = mlx_init(m->screen_wdt, m->screen_hgt, "cub3D", true);
 	if (!m->mlx)
+	{
 		printf("Failed to initialize mlx.\n");
-	m->render_img = mlx_new_image(m->mlx, m->map_wdt * TILE_SZ, m->map_hgt * TILE_SZ);
+		//Todo: free and exit
+	}
+	m->render_img = mlx_new_image(m->mlx, m->screen_wdt, m->screen_hgt);
 	if (!m->render_img)
+	{
 		printf("Failed to create img.\n");
+		//Todo: free and exit
+	}
 	if (mlx_image_to_window(m->mlx, m->render_img, 0, 0) < 0)
+	{
 		printf("Error displaying an img to window.\n");
+		//Todo: free and exit
+	}
 }
