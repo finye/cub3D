@@ -69,15 +69,24 @@ static void	move_player(double dir_x, double dir_y, t_map *m)
 	}
 }
 
-void	game_keyhook(void *param)
+static void	rotate_player(t_map *m, double rot_speed)
 {
-	t_map	*m;
 	double	old_dir_x;
 	double	old_plane_x;
 
-	m = (t_map *)param;
 	old_dir_x = m->player_dir_x;
 	old_plane_x = m->camera_plane_x;
+
+	m->player_dir_x  = m->player_dir_x  * cos(rot_speed) - m->player_dir_y * sin(rot_speed);
+	m->player_dir_y = old_dir_x * sin(rot_speed) + m->player_dir_y * cos(rot_speed);
+	m->camera_plane_x = m->camera_plane_x * cos(rot_speed) - m->camera_plane_y * sin(rot_speed);
+	m->camera_plane_y = old_plane_x * sin(rot_speed) + m->camera_plane_y * cos(rot_speed);
+}
+void	game_keyhook(void *param)
+{
+	t_map	*m;
+
+	m = (t_map *)param;
 	if (mlx_is_key_down(m->mlx, MLX_KEY_ESCAPE))
 	{
 		ft_printf("Moi Moi!!\n");
@@ -92,19 +101,9 @@ void	game_keyhook(void *param)
 	if (mlx_is_key_down(m->mlx, MLX_KEY_W))
 		move_player(m->player_dir_x, m->player_dir_y, m);
 	if (mlx_is_key_down(m->mlx, MLX_KEY_LEFT))
-	{
-		m->player_dir_x  = m->player_dir_x  * cos(m->rot_speed) - m->player_dir_y * sin(m->rot_speed);
-		m->player_dir_y = old_dir_x * sin(m->rot_speed) + m->player_dir_y * cos(m->rot_speed);
-		m->camera_plane_x = m->camera_plane_x * cos(m->rot_speed) - m->camera_plane_y * sin(m->rot_speed);
-		m->camera_plane_y = old_plane_x * sin(m->rot_speed) + m->camera_plane_y * cos(m->rot_speed);
-	}
+		rotate_player(m, -m->rot_speed);
 	if (mlx_is_key_down(m->mlx, MLX_KEY_RIGHT))
-	{
-		m->player_dir_x  = m->player_dir_x * cos(-(m->rot_speed)) - m->player_dir_y * sin(-(m->rot_speed));
-		m->player_dir_y = old_dir_x * sin(-(m->rot_speed)) + m->player_dir_y * cos(-(m->rot_speed));
-		m->camera_plane_x = m->camera_plane_x * cos(-(m->rot_speed)) - m->camera_plane_y * sin(-(m->rot_speed));
-		m->camera_plane_y = old_plane_x * sin(-(m->rot_speed)) + m->camera_plane_y * cos(-(m->rot_speed));
-	}
+		rotate_player(m, m->rot_speed);
 }
 
 void	init_raycast(t_map *m, t_raycast *ray)
@@ -199,7 +198,7 @@ void	calc_wall_dimensions(t_map *m, t_raycast *ray)
 		ray->draw_end = m->screen_hgt - 1;
 }
 
-void	draw_vertical_slice(t_map *m, t_raycast *ray, int screen_x)
+void	draw_vertical_column(t_map *m, t_raycast *ray, int screen_x)
 {
 	uint32_t	color;
 	int			y;
@@ -238,7 +237,7 @@ void	cast_single_ray(t_map *m, int screen_x)
 	calc_step_and_side_dist(m, &ray);
 	dda_find_wall(m, &ray);
 	calc_wall_dimensions(m, &ray);
-	draw_vertical_slice(m, &ray, screen_x);
+	draw_vertical_column(m, &ray, screen_x);
 }
 
 void cast_all_rays(void *param)
