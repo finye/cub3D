@@ -6,8 +6,12 @@ static int	allocate_line(int i, t_cub *cub)
 	if (!cub->map.arr[i])
 	{
 		while (--i >= 0)
+		{
 			free(cub->map.arr[i]);
+			cub->map.arr[i] = NULL;
+		}
 		free(cub->map.arr);
+		cub->map.arr = NULL;
 		return (FAIL);
 	}
 	return (SUCCESS);

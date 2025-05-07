@@ -13,20 +13,22 @@ static void	get_data(t_cub *cub)
 		if (!words)
 			free_exit(cub, NULL);
 		id = label_identifiers(words[0]);
-		if (check_id_duplicates(id, cub, words[2]) == FAIL
+		if (check_id_duplicates(id, cub, words) == FAIL
 			|| store_identifiers(words[1], id, cub) == FAIL)
 			free_exit(cub, words);
 		if (words[0] && !id)
 			extra_content(cub, words);
 		if (cub->all_ids && !cub->data[i + 1])
 			map_section_missing(cub, words);
-		if (cub->all_ids && !id && words[0] && store_map(i, cub) == FAIL)
-			free_exit(cub, words);
 		if (cub->all_ids && !id && words[0] && store_map(i, cub) == SUCCESS)
+		{
+			free_split(words);
 			break ;
+		}
+		else if (cub->all_ids && !id && words[0] && store_map(i, cub) == FAIL)
+			free_exit(cub, words);
 		free_split(words);
 	}
-	free_split(words);
 }
 
 static int	count_lines(t_cub *cub)
@@ -138,5 +140,6 @@ int	parse_file(t_cub *cub)
 	}
 	else
 		printf("East texture: FAILED TO LOAD\n");
+	free_paths(cub);
 	return (SUCCESS);
 }

@@ -107,6 +107,8 @@ typedef struct s_cub
 // clean
 void	free_cub(t_cub *cub);
 void	free_exit(t_cub *cub, char **split);
+void	free_map(t_cub *cub);
+void	free_paths(t_cub *cub);
 void	free_split(char **split);
 
 // error
@@ -128,7 +130,7 @@ int		store_map(int current_line, t_cub *cub);
 int		validate_map(t_cub *cub);
 
 // parse
-int		check_id_duplicates(int type, t_cub *cub, char *extra);
+int		check_id_duplicates(int type, t_cub *cub, char **words);
 int		parse_file(t_cub *cub);
 int		label_identifiers(char *id);
 int		store_identifiers(char *content, int type, t_cub *cub);

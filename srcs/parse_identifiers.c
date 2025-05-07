@@ -26,9 +26,9 @@ int	store_identifiers(char *content, int type, t_cub *cub)
 	return (SUCCESS);
 }
 
-int	check_id_duplicates(int type, t_cub *cub, char *extra)
+int	check_id_duplicates(int type, t_cub *cub, char **words)
 {
-	if (type && extra)
+	if (type && words[2])
 		return (err(EXTRA_CONTENT), FAIL);
 	if (type == NO && cub->north)
 		return (err(MULTI_WALL_ID), FAIL);

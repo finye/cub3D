@@ -29,7 +29,7 @@ INCLUDES =	-I./libft/incl -I./incl -I./MLX42/include
 RM =		rm -rf
 
 GREEN =		\033[0;92m
-BLUE = \033[0;94m
+BLUE =		\033[0;94m
 END_COLOR =	\033[0m
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
@@ -72,6 +72,7 @@ re: fclean all
 
 valgrind:
 	valgrind --leak-check=full --show-reachable=yes --show-leak-kinds=all \
-	--track-origins=yes --track-fds=yes --trace-children=yes -s ./cub3D 
+	--track-origins=yes --track-fds=yes --trace-children=yes -s \
+	--suppressions=mlx_suppression.supp ./cub3D $(MAP);
 
 .PHONY: all clean fclean re valgrind

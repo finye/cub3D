@@ -48,5 +48,6 @@ int	main(int ac, char **av)
 		return (FAIL);
 	if (validate_map(&cub) == FAIL)
 		return (FAIL);
+	free_exit(&cub, NULL);
 	return (SUCCESS);
 }
