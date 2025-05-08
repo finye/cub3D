@@ -6,7 +6,7 @@
 /*   By: eelaine <eelaine@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 11:09:16 by eelaine           #+#    #+#             */
-/*   Updated: 2025/02/03 15:22:50 by eelaine          ###   ########.fr       */
+/*   Updated: 2025/04/22 15:31:58 by eelaine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct s_list
 }					t_list;
 
 int			ft_abs(int n);
+int			ft_atoi_err(const char *str, int *error);
 long		ft_atol(const char *str);
 long long	ft_atoll(const char *str);
 int			ft_isalpha(int c);

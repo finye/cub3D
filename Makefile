@@ -4,9 +4,14 @@ SRC_DIR = srcs
 SRCS = $(addprefix $(SRC_DIR)/, \
 			clean.c \
 			error.c \
+			floor_ceiling.c \
 			init.c \
 			main.c \
-			parse_file.c)
+			parse_file.c \
+			parse_identifiers.c \
+			store_map.c \
+			validate_map.c \
+			validate_texture.c)
 
 OBJ_DIR =	objs
 OBJS =		$(SRCS:$(SRC_DIR)%.c=$(OBJ_DIR)/%.o)
@@ -24,7 +29,7 @@ INCLUDES =	-I./libft/incl -I./incl -I./MLX42/include
 RM =		rm -rf
 
 GREEN =		\033[0;92m
-BLUE = \033[0;94m
+BLUE =		\033[0;94m
 END_COLOR =	\033[0m
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
@@ -67,7 +72,7 @@ re: fclean all
 
 valgrind:
 	valgrind --leak-check=full --show-reachable=yes --show-leak-kinds=all \
-	--track-origins=yes --track-fds=yes --trace-children=yes \
-	--suppressions=readline.supp -s ./cub3D
+	--track-origins=yes --track-fds=yes --trace-children=yes -s \
+	--suppressions=mlx_suppression.supp ./cub3D $(MAP);
 
 .PHONY: all clean fclean re valgrind

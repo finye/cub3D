@@ -1,0 +1,106 @@
+# MLX42 Valgrind Suppression File
+
+# Suppress leaks from mlx_init and glfw
+{
+   MLX42_glfw_init_leak
+   Memcheck:Leak
+   match-leak-kinds: all
+   ...
+   obj:*/libglfw*
+   ...
+}
+
+{
+   MLX42_glfw_init_leak2
+   Memcheck:Leak
+   match-leak-kinds: all
+   ...
+   fun:_glfw*
+   ...
+}
+
+# Suppress X11 related leaks
+{
+   MLX42_X11_leak
+   Memcheck:Leak
+   match-leak-kinds: all
+   ...
+   obj:*/libX11*
+   ...
+}
+
+# Suppress OpenGL related leaks
+{
+   MLX42_OpenGL_leak
+   Memcheck:Leak
+   match-leak-kinds: all
+   ...
+   obj:*/libGL*
+   ...
+}
+
+# Suppress memory issues in mlx_load_png
+{
+   MLX42_png_load_issue
+   Memcheck:Cond
+   ...
+   fun:mlx_load_png
+   ...
+}
+
+{
+   MLX42_png_load_leak
+   Memcheck:Leak
+   match-leak-kinds: all
+   ...
+   fun:mlx_load_png
+   ...
+}
+
+# Suppress issues in mlx_texture functions
+{
+   MLX42_texture_functions
+   Memcheck:Leak
+   match-leak-kinds: all
+   ...
+   fun:mlx*texture*
+   ...
+}
+
+# Suppress conditional jumps in mlx functions
+{
+   MLX42_conditional_jumps
+   Memcheck:Cond
+   ...
+   fun:mlx_*
+   ...
+}
+
+# Suppress value errors in mlx functions
+{
+   MLX42_value_errors
+   Memcheck:Value8
+   ...
+   fun:mlx_*
+   ...
+}
+
+# Suppress dlopen related leaks
+{
+   MLX42_dlopen_leaks
+   Memcheck:Leak
+   match-leak-kinds: all
+   ...
+   fun:dlopen*
+   ...
+}
+
+# Suppress any leaks from lodepng (used by mlx_load_png)
+{
+   MLX42_lodepng_leaks
+   Memcheck:Leak
+   match-leak-kinds: all
+   ...
+   fun:*lodepng*
+   ...
+}
