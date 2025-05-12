@@ -9,6 +9,7 @@ SRCS = $(addprefix $(SRC_DIR)/, \
 			main.c \
 			parse_file.c \
 			parse_identifiers.c \
+			raycast_draw.c \
 			store_map.c \
 			validate_map.c \
 			validate_texture.c)

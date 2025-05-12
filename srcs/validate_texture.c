@@ -11,7 +11,7 @@ static mlx_texture_t	*load_texture(t_cub *cub, char *path)
 	if (!trimmed_path)
 	{
 		free_exit(cub, NULL);
-		return (err(TEXTURE_TRIM_FAIL), NULL);
+		return (err(TEX_TRIM_FAIL), NULL);
 	}
 	texture = mlx_load_png(trimmed_path);
 	free(trimmed_path);
@@ -63,7 +63,7 @@ int	validate_texture(char *content)
 		len = ft_strlen(content);
 		if (len < 6 || !ft_strnstr(&content[len - 5], ".png\n", 5)
 			|| ft_strnstr(&content[len - 6], "/.png\n", 6))
-			return (err(TEXT_EXT), FAIL);
+			return (err(TEX_EXT), FAIL);
 	}
 	return (SUCCESS);
 }
