@@ -8,6 +8,7 @@
 # include <fcntl.h>
 # include <stdio.h>
 # include <stdbool.h>
+# include <math.h>
 
 # define SUCCESS 0
 # define FAIL 1
@@ -81,6 +82,27 @@ typedef struct s_map
 	char	below;
 }	t_map;
 
+typedef struct s_player
+{
+	int			player_coord_x;
+	int			player_coord_y;
+	mlx_t		*mlx;
+	mlx_image_t	*render_img;
+	double		ray_dir_x;
+	double		ray_dir_y;
+	double		camera_plane_x;
+	double		camera_plane_y;
+	double		player_dir_x;
+	double		player_dir_y;
+	double		rot_speed;
+	double		move_speed;
+	double		camera_x;
+	double		player_pos_x;
+	double		player_pos_y;
+	int			screen_wdt;
+	int			screen_hgt;
+}	t_player;
+
 typedef struct s_cub
 {
 	char			**data;
@@ -102,7 +124,28 @@ typedef struct s_cub
 	t_map			map;
 	t_rgb			floor;
 	t_rgb			ceiling;
+	t_player		p;
 }	t_cub;
+
+typedef struct s_raycast
+{
+	int		step_x;
+	int		step_y;
+	int		map_pos_x;
+	int		map_pos_y;
+	int		wall_side;
+	bool	wall_hit;
+	double	ray_dir_x;
+	double	ray_dir_y;
+	double	side_dist_x;
+	double	side_dist_y;
+	double	delta_dist_x;
+	double	delta_dist_y;
+	double	perp_wall_dist;
+	int		line_hgt;
+	int		draw_start;
+	int		draw_end;
+}	t_raycast;
 
 // clean
 void	free_cub(t_cub *cub);
@@ -134,6 +177,11 @@ int		check_id_duplicates(int type, t_cub *cub, char **words);
 int		parse_file(t_cub *cub);
 int		label_identifiers(char *id);
 int		store_identifiers(char *content, int type, t_cub *cub);
+
+// raycast_draw
+void	setup_mlx(t_player *p);
+void	game_keyhook(void *param);
+void	cast_all_rays(void *param);
 
 //texture
 void	cleanup_textures(t_cub *cub);
