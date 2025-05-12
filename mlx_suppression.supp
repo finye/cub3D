@@ -91,7 +91,7 @@
    Memcheck:Leak
    match-leak-kinds: all
    ...
-   fun:dlopen*
+   fun:*dl_open*
    ...
 }
 
@@ -102,5 +102,26 @@
    match-leak-kinds: all
    ...
    fun:*lodepng*
+   ...
+}
+
+# Suppress libLLVM related leaks
+{
+   libLLVM_leak
+   Memcheck:Leak
+   match-leak-kinds: all
+   ...
+   obj:*libLLVM*
+   ...
+}
+
+{
+   MLX42_dlopen_invalid_reads
+   Memcheck:Addr8
+   ...
+   fun:strncmp
+   fun:is_dst
+   ...
+   fun:*dl*open*
    ...
 }

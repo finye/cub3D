@@ -99,6 +99,7 @@ typedef struct s_player
 	double		camera_x;
 	double		player_pos_x;
 	double		player_pos_y;
+	char		player_heading;
 	int			screen_wdt;
 	int			screen_hgt;
 }	t_player;
