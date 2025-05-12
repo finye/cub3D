@@ -35,7 +35,7 @@ static void	get_surrounding_chars(int i, int j, t_cub *cub)
 		cub->map.below = ' ';
 }
 
-static int	check_forbidden_chars(t_cub *cub, char c)
+static int	check_forbidden_chars(t_cub *cub, int i, int j, char c)
 {
 	if (!ft_strchr("10NSWE\n \0", c))
 		return (err(FORBIDDEN_CHARS), FAIL);
@@ -47,6 +47,9 @@ static int	check_forbidden_chars(t_cub *cub, char c)
 			|| cub->map.left == ' ' || cub->map.right == ' ')
 			return (err(OUT_OF_BOUNDS), FAIL);
 		cub->map.pos_found = true;
+		cub->p.player_coord_x = j;
+		cub->p.player_coord_y = i;
+		cub->p.player_heading = c;
 	}
 	if (c == '0' && (cub->map.above == ' ' || cub->map.below == ' '
 			|| cub->map.left == ' ' || cub->map.right == ' '))
@@ -68,7 +71,7 @@ int	validate_map(t_cub *cub)
 		while (cub->map.arr[i][j])
 		{
 			get_surrounding_chars(i, j, cub);
-			if (check_forbidden_chars(cub, cub->map.arr[i][j]) == FAIL)
+			if (check_forbidden_chars(cub, i, j, cub->map.arr[i][j]) == FAIL)
 				return (free_exit(cub, 0), FAIL);
 			j++;
 		}

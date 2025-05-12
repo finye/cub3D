@@ -3,8 +3,8 @@
 void	init_player_data(t_player *p)
 {
 	p->render_img = NULL;
-	p->player_coord_x = 4;
-	p->player_coord_y = 2;
+	/* p->player_coord_x = 4;
+	p->player_coord_y = 2; */
 	p->camera_plane_x = 0.0;
 	p->camera_plane_y = 0.66;
 	p->player_dir_x = 1.0;
@@ -27,6 +27,8 @@ void	move_player(double dir_x, double dir_y, t_player *p, t_map *map)
 
 	new_pos_x = p->player_pos_x + dir_x * p->move_speed;
 	new_pos_y = p->player_pos_y + dir_y * p->move_speed;
+	if (new_pos_x < 0 || new_pos_y < 0)
+		return ;
 	map_x = (int)new_pos_x;
 	map_y = (int)new_pos_y;
 	if (map_x < 0 || map_x >= map->width || map_y < 0 || map_y >= map->height)
@@ -196,7 +198,7 @@ void	draw_vertical_column(t_player *p, t_raycast *ray, int screen_x)
 		ceiling_y++;
 	}
 	floor_y = ray->draw_end + 1;
-	while (floor_y < p->screen_hgt)
+	while (floor_y + 1 < p->screen_hgt)
 	{
 		mlx_put_pixel(p->render_img, screen_x, floor_y, 0xFF6F61FF);
 		floor_y++;
