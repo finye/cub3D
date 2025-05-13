@@ -1,14 +1,42 @@
 #include "../incl/cub3D.h"
 
+void	set_player_direction(t_player *p, double dir_x, double dir_y)
+{
+	p->player_dir_x = dir_x;
+	p->player_dir_y = dir_y;
+}
+void	set_camera_plane(t_player *p, double plane_x, double plane_y)
+{
+	p->camera_plane_x = plane_x;
+	p->camera_plane_y = plane_y;
+}
+void	init_player_direction(t_player *p)
+{
+	if (p->player_heading == 'N')
+	{
+		set_player_direction(p, 0.0, -1.0);
+		set_camera_plane(p, 0.66, 0.0);
+	}
+	else if(p->player_heading == 'S')
+	{
+		set_player_direction(p, 0.0, 1.0);
+		set_camera_plane(p, -0.66, 0.0);
+	}
+	else if(p->player_heading == 'E')
+	{
+		set_player_direction(p, 1.0, 0.0);
+		set_camera_plane(p, 0.0, 0.66);
+	}
+	else if(p->player_heading == 'W')
+	{
+		set_player_direction(p, -1.0, 0.0);
+		set_camera_plane(p, 0.0, -0.66);
+	}
+}
+
 void	init_player_data(t_player *p)
 {
 	p->render_img = NULL;
-	/* p->player_coord_x = 4;
-	p->player_coord_y = 2; */
-	p->camera_plane_x = 0.66;
-	p->camera_plane_y = 0.0;
-	p->player_dir_x = 0.0;
-	p->player_dir_y = -1.0;
 	p->rot_speed = 0.05;
 	p->move_speed = 0.1;
 	p->camera_x = 0.0;
@@ -16,39 +44,40 @@ void	init_player_data(t_player *p)
 	p->player_pos_y = p->player_coord_y + 0.5;
 	p->screen_wdt = 0;
 	p->screen_hgt = 0;
+	init_player_direction(p);
 }
 
 int	is_tile_wall(t_map *map, double new_pos_x, double new_pos_y)
 {
-    int	map_x;
-    int	map_y;
+	int	map_x;
+	int	map_y;
 
-    map_x = (int)new_pos_x;
-    map_y = (int)new_pos_y;
+	map_x = (int)new_pos_x;
+	map_y = (int)new_pos_y;
 
-    if (map_x < 0 || map_x >= map->width || map_y < 0 || map_y >= map->height)
-        return (1);
-    if (map->arr[map_y][map_x] == '1')
-        return (1);
-    return (0);
+	if (map_x < 0 || map_x >= map->width || map_y < 0 || map_y >= map->height)
+		return (1);
+	if (map->arr[map_y][map_x] == '1')
+		return (1);
+	return (0);
 }
 
 int	is_move_blocked(t_map *map, double new_pos_x, double new_pos_y)
 {
-    double	margin;
+	double	margin;
 
 	margin = 0.1;
-    if (is_tile_wall(map, new_pos_x, new_pos_y))
+	if (is_tile_wall(map, new_pos_x, new_pos_y))
 		return (1);
-    if (is_tile_wall(map, new_pos_x + margin, new_pos_y))
+	if (is_tile_wall(map, new_pos_x + margin, new_pos_y))
 		return (1);
-    if (is_tile_wall(map, new_pos_x - margin, new_pos_y))
+	if (is_tile_wall(map, new_pos_x - margin, new_pos_y))
 		return (1);
-    if (is_tile_wall(map, new_pos_x, new_pos_y + margin))
+	if (is_tile_wall(map, new_pos_x, new_pos_y + margin))
 		return (1);
-    if (is_tile_wall(map, new_pos_x, new_pos_y - margin))
+	if (is_tile_wall(map, new_pos_x, new_pos_y - margin))
 		return (1);
-    return (0);
+	return (0);
 }
 
 void	move_player(double dir_x, double dir_y, t_player *p, t_map *map)
