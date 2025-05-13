@@ -243,22 +243,13 @@ void	draw_vertical_column(t_player *p, t_raycast *ray, int screen_x)
 		color = 0xF7CAC9FF; // Vertical wall (X-side)
 	y = ray->draw_start;
 	while (y <= ray->draw_end)
-	{
-		mlx_put_pixel(p->render_img, screen_x, y, color);
-		y++;
-	}
+		mlx_put_pixel(p->render_img, screen_x, y++, color);
 	ceiling_y = 0;
 	while (ceiling_y < ray->draw_start)
-	{
-		mlx_put_pixel(p->render_img, screen_x, ceiling_y, 0xB565A7FF);
-		ceiling_y++;
-	}
+		mlx_put_pixel(p->render_img, screen_x, ceiling_y++, 0xB565A7FF);
 	floor_y = ray->draw_end + 1;
 	while (floor_y < p->screen_hgt)
-	{
-		mlx_put_pixel(p->render_img, screen_x, floor_y, 0xFF6F61FF);
-		floor_y++;
-	}
+		mlx_put_pixel(p->render_img, screen_x, floor_y++, 0xFF6F61FF);
 }
 
 void	cast_single_ray(t_cub *cub, int screen_x)
