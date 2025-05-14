@@ -301,12 +301,37 @@ static void draw_texture(t_cub *cub, int screen_x, int y, t_raycast *ray, mlx_im
 	mlx_put_pixel(cub->p.render_img, screen_x, y, color);
 }
 
+void	draw_floor(t_cub *cub, t_raycast *ray, int screen_x)
+{
+	int			y;
+	uint32_t	color;
+
+	y = ray->draw_end + 1;
+	color = (cub->floor.r << 24 | cub->floor.g << 16 | cub->floor.b << 8 | 0xFF);
+	while (y < cub->p.screen_hgt)
+	{
+		mlx_put_pixel(cub->p.render_img, screen_x, y, color);
+		y++;
+	}
+}
+void	draw_ceiling(t_cub *cub, t_raycast *ray, int screen_x)
+{
+		int			y;
+		uint32_t	color;
+
+		y = 0;
+		color = (cub->ceiling.r << 24 | cub->ceiling.g << 16 | cub->ceiling.b << 8 | 0xFF);
+		while (y < ray->draw_start)
+		{
+			mlx_put_pixel(cub->p.render_img, screen_x, y, color);
+			y++;
+		}
+}
+
 void	draw_vertical_column(t_cub *cub, t_player *p, t_raycast *ray, int screen_x)
 {
-	int				y;
-	int				ceiling_y;
-	int				floor_y;
-	mlx_image_t		*current_texture;
+	int			y;
+	mlx_image_t	*current_texture;
 
 	current_texture = get_tex_direction(cub, p, ray);
 	if (!current_texture)
@@ -322,14 +347,9 @@ void	draw_vertical_column(t_cub *cub, t_player *p, t_raycast *ray, int screen_x)
 	y = ray->draw_start;
 	while (y < ray->draw_end)
 		draw_texture(cub, screen_x, y++, ray, current_texture);
-	ceiling_y = 0;
-	while (ceiling_y < ray->draw_start)
-		mlx_put_pixel(p->render_img, screen_x, ceiling_y++, 0xB565A7FF);
-	floor_y = ray->draw_end + 1;
-	while (floor_y < p->screen_hgt)
-		mlx_put_pixel(p->render_img, screen_x, floor_y++, 0xFF6F61FF);
+	draw_ceiling(cub, ray, screen_x);
+	draw_floor(cub, ray, screen_x);
 }
-
 void	cast_single_ray(t_cub *cub, int screen_x)
 {
 	t_raycast	ray;
