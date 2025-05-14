@@ -49,6 +49,7 @@ int	main(int ac, char **av)
 	if (validate_map(&cub) == FAIL)
 		return (FAIL);
 	setup_mlx(&cub.p);
+	init_imgs(&cub);
 	mlx_loop_hook(cub.p.mlx, &cast_all_rays, &cub);
 	mlx_loop_hook(cub.p.mlx, &game_keyhook, &cub);
 	mlx_loop(cub.p.mlx);
