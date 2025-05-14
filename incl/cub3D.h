@@ -62,6 +62,7 @@
 
 # define MAX_HEIGHT 500
 # define MAX_WIDTH 500
+# define RES 1024
 
 typedef struct s_rbg
 {
@@ -104,6 +105,31 @@ typedef struct s_player
 	int			screen_hgt;
 }	t_player;
 
+typedef struct s_raycast
+{
+	int			step_x;
+	int			step_y;
+	int			map_pos_x;
+	int			map_pos_y;
+	int			wall_side;
+	bool		wall_hit;
+	double		ray_dir_x;
+	double		ray_dir_y;
+	double		side_dist_x;
+	double		side_dist_y;
+	double		delta_dist_x;
+	double		delta_dist_y;
+	double		perp_wall_dist;
+	int			line_hgt;
+	int			draw_start;
+	int			draw_end;
+	double		wall_x;
+	int			tex_x;
+	double		tex_pos;
+	double		tex_step;
+	int			tex_num;
+}	t_raycast;
+
 typedef struct s_cub
 {
 	char			**data;
@@ -122,31 +148,16 @@ typedef struct s_cub
 	mlx_texture_t	*south_tex;
 	mlx_texture_t	*west_tex;
 	mlx_texture_t	*east_tex;
+	mlx_image_t		*north_img;
+	mlx_image_t		*south_img;
+	mlx_image_t		*west_img;
+	mlx_image_t		*east_img;
 	t_map			map;
 	t_rgb			floor;
 	t_rgb			ceiling;
 	t_player		p;
+	t_raycast		*ray;
 }	t_cub;
-
-typedef struct s_raycast
-{
-	int		step_x;
-	int		step_y;
-	int		map_pos_x;
-	int		map_pos_y;
-	int		wall_side;
-	bool	wall_hit;
-	double	ray_dir_x;
-	double	ray_dir_y;
-	double	side_dist_x;
-	double	side_dist_y;
-	double	delta_dist_x;
-	double	delta_dist_y;
-	double	perp_wall_dist;
-	int		line_hgt;
-	int		draw_start;
-	int		draw_end;
-}	t_raycast;
 
 // clean
 void	free_cub(t_cub *cub);
@@ -165,6 +176,7 @@ int		get_color(char *color_info, int location, t_cub *cub);
 
 // init
 void	init(t_cub *cub, int fd, char *path);
+void	init_imgs(t_cub *cub);
 
 // main
 int		open_file(char *file);
@@ -183,6 +195,7 @@ int		store_identifiers(char *content, int type, t_cub *cub);
 void	setup_mlx(t_player *p);
 void	game_keyhook(void *param);
 void	cast_all_rays(void *param);
+void	cast_single_ray(t_cub *cub, int screen_x);
 
 //texture
 void	cleanup_textures(t_cub *cub);

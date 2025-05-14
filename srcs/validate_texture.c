@@ -48,6 +48,7 @@ int	load_all_textures(t_cub *cub)
 	cub->east_tex = load_texture(cub, cub->east);
 	if (!cub->north_tex || !cub->south_tex || !cub->west_tex || !cub->east_tex)
 	{
+		printf("REACHED CLEANUP TEXTURES\n");
 		cleanup_textures(cub);
 		return (FAIL);
 	}
