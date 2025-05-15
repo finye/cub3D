@@ -1,9 +1,9 @@
-NO ./textures/north_s.png
+NO ./textures/north.png
 SO ./textures/south.png
 WE ./textures/west.png
 EA ./textures/east.png
 
-F 10,10,10
+F 250,10,10
 C 0,34,100
 
 111111111
