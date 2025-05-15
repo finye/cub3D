@@ -53,7 +53,6 @@ int	main(int ac, char **av)
 	mlx_loop_hook(cub.p.mlx, &cast_all_rays, &cub);
 	mlx_loop_hook(cub.p.mlx, &game_keyhook, &cub);
 	mlx_loop(cub.p.mlx);
-	mlx_terminate(cub.p.mlx);
 	free_exit(&cub, NULL);
 	return (SUCCESS);
 }

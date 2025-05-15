@@ -6,7 +6,8 @@ static void	draw_floor(t_cub *cub, t_raycast *ray, int screen_x)
 	uint32_t	color;
 
 	y = ray->draw_end + 1;
-	color = (cub->floor.r << 24 | cub->floor.g << 16 | cub->floor.b << 8 | 0xFF);
+	color = (cub->floor.r << 24 | cub->floor.g << 16
+			| cub->floor.b << 8 | 0xFF);
 	while (y < cub->p.screen_hgt)
 	{
 		mlx_put_pixel(cub->p.render_img, screen_x, y, color);
@@ -20,7 +21,8 @@ static void	draw_ceiling(t_cub *cub, t_raycast *ray, int screen_x)
 	uint32_t	color;
 
 	y = 0;
-	color = (cub->ceiling.r << 24 | cub->ceiling.g << 16 | cub->ceiling.b << 8 | 0xFF);
+	color = (cub->ceiling.r << 24 | cub->ceiling.g << 16
+			| cub->ceiling.b << 8 | 0xFF);
 	while (y < ray->draw_start)
 	{
 		mlx_put_pixel(cub->p.render_img, screen_x, y, color);
@@ -28,7 +30,8 @@ static void	draw_ceiling(t_cub *cub, t_raycast *ray, int screen_x)
 	}
 }
 
-static void	draw_vertical_column(t_cub *cub, t_player *p, t_raycast *ray, int screen_x)
+static void	draw_vertical_column(t_cub *cub, t_player *p, t_raycast *ray, \
+		int screen_x)
 {
 	mlx_image_t	*current_texture;
 
@@ -42,7 +45,8 @@ static void	draw_vertical_column(t_cub *cub, t_player *p, t_raycast *ray, int sc
 	if (ray->wall_side == 1 && ray->ray_dir_y > 0)
 		ray->tex_x = current_texture->width - ray->tex_x - 1;
 	ray->tex_step = 1.0 * current_texture->height / ray->line_hgt;
-	ray->tex_pos = (ray->draw_start - p->screen_hgt / 2 + ray->line_hgt / 2) * ray->tex_step;
+	ray->tex_pos = (ray->draw_start - p->screen_hgt / 2 + ray->line_hgt / 2) \
+		* ray->tex_step;
 	ray->y = ray->draw_start;
 	while (ray->y++ < ray->draw_end)
 		draw_texture(cub, screen_x, ray, current_texture);
@@ -73,13 +77,15 @@ void	cast_all_rays(void *param)
 	pixels = (uint32_t *)cub->p.render_img->pixels;
 	size = cub->p.render_img->width * cub->p.render_img->height;
 	while (i < size)
-		 pixels[i++] = 0x000000FF;
+		pixels[i++] = 0x000000FF;
 	i = 0;
 	while (i < cub->p.screen_wdt)
 	{
-		cub->p.camera_x = 2 * i / (double)cub->p.screen_wdt - 1; // x-coordinate in camera space
-		cub->p.ray_dir_x = cub->p.player_dir_x + cub->p.camera_plane_x * cub->p.camera_x;
-		cub->p.ray_dir_y = cub->p.player_dir_y + cub->p.camera_plane_y * cub->p.camera_x;
+		cub->p.camera_x = 2 * i / (double)cub->p.screen_wdt - 1;
+		cub->p.ray_dir_x = cub->p.player_dir_x + cub->p.camera_plane_x * \
+			cub->p.camera_x;
+		cub->p.ray_dir_y = cub->p.player_dir_y + cub->p.camera_plane_y * \
+			cub->p.camera_x;
 		cast_single_ray(cub, i);
 		i++;
 	}
