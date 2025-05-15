@@ -176,7 +176,6 @@ int		get_color(char *color_info, int location, t_cub *cub);
 
 // init
 void	init(t_cub *cub, int fd, char *path);
-void	init_imgs(t_cub *cub);
 
 // main
 int		open_file(char *file);
@@ -185,17 +184,32 @@ int		open_file(char *file);
 int		store_map(int current_line, t_cub *cub);
 int		validate_map(t_cub *cub);
 
+// mlx_init
+void	setup_mlx(t_player *p);
+void	init_player_data(t_player *p);
+
 // parse
 int		check_id_duplicates(int type, t_cub *cub, char **words);
 int		parse_file(t_cub *cub);
 int		label_identifiers(char *id);
 int		store_identifiers(char *content, int type, t_cub *cub);
 
-// raycast_draw
-void	setup_mlx(t_player *p);
+// player movement
 void	game_keyhook(void *param);
+
+// raycast_draw
 void	cast_all_rays(void *param);
-void	cast_single_ray(t_cub *cub, int screen_x);
+
+// raycast_textures
+void		init_imgs(t_cub *cub);
+mlx_image_t	*get_tex_direction(t_cub *cub, t_player *p, t_raycast *ray);
+void		draw_texture(t_cub *cub, int screen_x, int y, t_raycast *ray, mlx_image_t *current_texture);
+
+// raycast utils
+void	init_raycast(t_player *p, t_raycast *ray);
+void	calc_step_and_side_dist(t_player *p, t_raycast *ray);
+void	dda_find_wall(t_map *m, t_raycast *ray);
+void	calc_wall_dimensions(t_player *p, t_raycast *ray);
 
 //texture
 void	cleanup_textures(t_cub *cub);

@@ -7,9 +7,14 @@ SRCS = $(addprefix $(SRC_DIR)/, \
 			floor_ceiling.c \
 			init.c \
 			main.c \
+			mlx_init.c \
 			parse_file.c \
 			parse_identifiers.c \
+			player_init.c \
+			player_movement.c \
 			raycast_draw.c \
+			raycast_textures.c \
+			raycast_utils.c \
 			store_map.c \
 			validate_map.c \
 			validate_texture.c)
@@ -24,8 +29,9 @@ MLX_DIR =	./MLX42
 MLX =		$(MLX_DIR)/build/libmlx42.a
 
 CC =		cc
-CFLAGS =	-Wall -Wextra -Werror -g
+CFLAGS =	-Wall -Wextra -Werror -g -mmacosx-version-min=15.1
 INCLUDES =	-I./libft/incl -I./incl -I./MLX42/include
+BREW_LIB = -I/opt/homebrew/include -L/opt/homebrew/lib
 
 RM =		rm -rf
 
@@ -38,7 +44,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(NAME): $(MLX) $(LIBFT) $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(MLX) $(LIBFT) -lglfw -ldl -pthread -lm -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) $(MLX) $(LIBFT) $(BREW_LIB) -lglfw -ldl -pthread -lm -o $(NAME)
 	@echo "$(GREEN)cub3D compiled$(END_COLOR)"
 
 $(LIBFT):
