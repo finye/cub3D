@@ -160,6 +160,7 @@ void	init_imgs(t_cub *cub)
 		mlx_resize_image(cub->east_img, RES, RES);
 	if (!cub->north_img || !cub->south_img || !cub->west_img || !cub->east_img)
 		printf("SOS TEXTURE TO IMG FAIL\n");
+	cleanup_textures(cub);
 }
 
 void	init_raycast(t_player *p, t_raycast *ray)
@@ -257,6 +258,7 @@ static mlx_image_t	*get_tex_direction(t_cub *cub, t_player *p, t_raycast *ray)
 {
 	mlx_image_t	*current_texture;
 
+	
 	current_texture = NULL;
 	if (ray->wall_side == 1)
 	{

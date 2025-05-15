@@ -28,6 +28,8 @@ int	store_identifiers(char *content, int type, t_cub *cub)
 
 int	check_id_duplicates(int type, t_cub *cub, char **words)
 {
+	if (type && !words[1])
+		return (err(NO_CONTENT), FAIL);
 	if (type && words[2])
 		return (err(EXTRA_CONTENT), FAIL);
 	if (type == NO && cub->north)

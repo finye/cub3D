@@ -17,8 +17,8 @@ static mlx_texture_t	*load_texture(t_cub *cub, char *path)
 	free(trimmed_path);
 	if (!texture)
 	{
-		free_exit(cub, NULL);
 		err(TEX_LOAD_FAIL);
+		free_exit(cub, NULL);
 		return (NULL);
 	}
 	return (texture);
