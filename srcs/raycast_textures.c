@@ -46,7 +46,8 @@ mlx_image_t	*get_tex_direction(t_cub *cub, t_player *p, t_raycast *ray)
 	return (current_texture);
 }
 
-void	draw_texture(t_cub *cub, int screen_x, t_raycast *ray, mlx_image_t *current_texture)
+void	draw_texture(t_cub *cub, int screen_x, t_raycast *ray, \
+		mlx_image_t *current_texture)
 {
 	int			tex_y;
 	uint32_t	color;
@@ -54,18 +55,18 @@ void	draw_texture(t_cub *cub, int screen_x, t_raycast *ray, mlx_image_t *current
 
 	if (!current_texture || !current_texture->pixels)
 	{
-		printf("ISSUE HERE 1\n");
+		free_exit(cub, NULL);
 		return ;
 	}
 	if (ray->tex_x < 0 || ray->tex_x >= (int)current_texture->width)
 	{
-		printf("wall_x:%f tex_x:%d\n", ray->wall_x, ray->tex_x);
-		printf("ISSUE HERE 2\n");
+		free_exit(cub, NULL);
 		return ;
 	}
- 	tex_y = (int)ray->tex_pos & (current_texture->height - 1);
- 	ray->tex_pos += ray->tex_step;
- 	pixel = &current_texture->pixels[(tex_y * current_texture->width + ray->tex_x) * 4];
+	tex_y = (int)ray->tex_pos & (current_texture->height - 1);
+	ray->tex_pos += ray->tex_step;
+	pixel = &current_texture->pixels[(tex_y * \
+		current_texture->width + ray->tex_x) * 4];
 	color = (pixel[0] << 24) | (pixel[1] << 16) | (pixel[2] << 8) | pixel[3];
 	mlx_put_pixel(cub->p.render_img, screen_x, ray->y, color);
 }

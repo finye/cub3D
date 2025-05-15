@@ -203,7 +203,8 @@ void		cast_all_rays(void *param);
 // raycast_textures
 void		init_imgs(t_cub *cub);
 mlx_image_t	*get_tex_direction(t_cub *cub, t_player *p, t_raycast *ray);
-void		draw_texture(t_cub *cub, int screen_x, t_raycast *ray, mlx_image_t *current_texture);
+void		draw_texture(t_cub *cub, int screen_x, t_raycast *ray, \
+			mlx_image_t *current_texture);
 
 // raycast utils
 void		init_raycast(t_player *p, t_raycast *ray);

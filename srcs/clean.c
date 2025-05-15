@@ -56,6 +56,8 @@ void	free_exit(t_cub *cub, char **split)
 	free_split(split);
 	free_paths(cub);
 	free_map(cub);
+	if (cub->p.mlx)
+		mlx_terminate(cub->p.mlx);
 	free_cub(cub);
 	exit(1);
 }
