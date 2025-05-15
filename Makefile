@@ -29,9 +29,8 @@ MLX_DIR =	./MLX42
 MLX =		$(MLX_DIR)/build/libmlx42.a
 
 CC =		cc
-CFLAGS =	-Wall -Wextra -Werror -g -mmacosx-version-min=15.1
+CFLAGS =	-Wall -Wextra -Werror -g
 INCLUDES =	-I./libft/incl -I./incl -I./MLX42/include
-BREW_LIB = -I/opt/homebrew/include -L/opt/homebrew/lib
 
 RM =		rm -rf
 
@@ -44,7 +43,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(NAME): $(MLX) $(LIBFT) $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(MLX) $(LIBFT) $(BREW_LIB) -lglfw -ldl -pthread -lm -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) $(MLX) $(LIBFT) -lglfw -ldl -pthread -lm -o $(NAME)
 	@echo "$(GREEN)cub3D compiled$(END_COLOR)"
 
 $(LIBFT):
