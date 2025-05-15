@@ -141,12 +141,7 @@ void	game_keyhook(void *param)
 
 void	init_imgs(t_cub *cub)
 {
-	printf("REACHED INIT_IMGS\n");
 	cub->north_img = mlx_texture_to_image(cub->p.mlx, cub->north_tex);
-	if (!cub->north_img)
-		printf("ISSUE WITH LOADING NORTH_IMG\n");
-	else
-		printf("ray->north_img: width:%u\n", cub->north_img->width);
 	if (cub->north_img->width != RES || cub->north_img->height != RES)
 		mlx_resize_image(cub->north_img, RES, RES);
 	cub->south_img = mlx_texture_to_image(cub->p.mlx, cub->south_tex);
@@ -159,7 +154,10 @@ void	init_imgs(t_cub *cub)
 	if (cub->east_img->width != RES || cub->east_img->height != RES)
 		mlx_resize_image(cub->east_img, RES, RES);
 	if (!cub->north_img || !cub->south_img || !cub->west_img || !cub->east_img)
-		printf("SOS TEXTURE TO IMG FAIL\n");
+	{
+		err(TEX_TO_IMG_FAIL);
+		free_exit(cub, NULL);
+	}
 	cleanup_textures(cub);
 }
 
