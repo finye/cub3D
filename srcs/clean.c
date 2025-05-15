@@ -52,6 +52,7 @@ void	free_cub(t_cub *cub)
 
 void	free_exit(t_cub *cub, char **split)
 {
+	cleanup_textures(cub);
 	free_split(split);
 	free_paths(cub);
 	free_map(cub);

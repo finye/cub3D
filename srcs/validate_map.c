@@ -72,12 +72,12 @@ int	validate_map(t_cub *cub)
 		{
 			get_surrounding_chars(i, j, cub);
 			if (check_forbidden_chars(cub, i, j, cub->map.arr[i][j]) == FAIL)
-				return (free_exit(cub, 0), FAIL);
+				return (free_exit(cub, NULL), FAIL);
 			j++;
 		}
 		i++;
 	}
 	if (is_player_found(cub) == FAIL)
-		return (free_exit(cub, 0), FAIL);
+		return (free_exit(cub, NULL), FAIL);
 	return (SUCCESS);
 }

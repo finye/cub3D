@@ -9,6 +9,7 @@ static void	init_map(t_cub *cub)
 	cub->map.below = 0;
 	cub->map.left = 0;
 	cub->map.right = 0;
+	cub->map.arr = NULL;
 }
 
 static void	init_rgb(t_cub *cub)
@@ -35,6 +36,14 @@ void	init(t_cub *cub, int fd, char *path)
 	cub->south = NULL;
 	cub->west = NULL;
 	cub->east = NULL;
+	cub->north_tex = NULL;
+	cub->south_tex = NULL;
+	cub->west_tex = NULL;
+	cub->east_tex = NULL;
+	cub->north_img = NULL;
+	cub->south_img = NULL;
+	cub->west_img = NULL;
+	cub->east_img = NULL;
 	init_rgb(cub);
 	init_map(cub);
 }
