@@ -30,7 +30,6 @@ static void	draw_ceiling(t_cub *cub, t_raycast *ray, int screen_x)
 
 static void	draw_vertical_column(t_cub *cub, t_player *p, t_raycast *ray, int screen_x)
 {
-	int			y;
 	mlx_image_t	*current_texture;
 
 	current_texture = get_tex_direction(cub, p, ray);
@@ -44,9 +43,9 @@ static void	draw_vertical_column(t_cub *cub, t_player *p, t_raycast *ray, int sc
 		ray->tex_x = current_texture->width - ray->tex_x - 1;
 	ray->tex_step = 1.0 * current_texture->height / ray->line_hgt;
 	ray->tex_pos = (ray->draw_start - p->screen_hgt / 2 + ray->line_hgt / 2) * ray->tex_step;
-	y = ray->draw_start;
-	while (y < ray->draw_end)
-		draw_texture(cub, screen_x, y++, ray, current_texture);
+	ray->y = ray->draw_start;
+	while (ray->y++ < ray->draw_end)
+		draw_texture(cub, screen_x, ray, current_texture);
 	draw_ceiling(cub, ray, screen_x);
 	draw_floor(cub, ray, screen_x);
 }

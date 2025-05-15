@@ -4,6 +4,7 @@ void	init_raycast(t_player *p, t_raycast *ray)
 {
 	ray->step_x = 0;
 	ray->step_y = 0;
+	ray->y = 0;
 	ray->map_pos_x = (int)p->player_pos_x;
 	ray->map_pos_y = (int)p->player_pos_y;
 	ray->wall_side = -1;

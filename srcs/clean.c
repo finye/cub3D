@@ -1,22 +1,6 @@
 #include "../incl/cub3D.h"
 
-void	free_paths(t_cub *cub)
-{
-	if (cub->north)
-		free(cub->north);
-	if (cub->south)
-		free(cub->south);
-	if (cub->west)
-		free(cub->west);
-	if (cub->east)
-		free(cub->east);
-	cub->north = NULL;
-	cub->south = NULL;
-	cub->west = NULL;
-	cub->east = NULL;
-}
-
-void	free_map(t_cub *cub)
+static void	free_map(t_cub *cub)
 {
 	int	i;
 
@@ -31,6 +15,22 @@ void	free_map(t_cub *cub)
 	}
 	free(cub->map.arr);
 	cub->map.arr = NULL;
+}
+
+void	free_paths(t_cub *cub)
+{
+	if (cub->north)
+		free(cub->north);
+	if (cub->south)
+		free(cub->south);
+	if (cub->west)
+		free(cub->west);
+	if (cub->east)
+		free(cub->east);
+	cub->north = NULL;
+	cub->south = NULL;
+	cub->west = NULL;
+	cub->east = NULL;
 }
 
 void	free_cub(t_cub *cub)
