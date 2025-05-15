@@ -7,9 +7,14 @@ SRCS = $(addprefix $(SRC_DIR)/, \
 			floor_ceiling.c \
 			init.c \
 			main.c \
+			mlx_init.c \
 			parse_file.c \
 			parse_identifiers.c \
+			player_init.c \
+			player_movement.c \
 			raycast_draw.c \
+			raycast_textures.c \
+			raycast_utils.c \
 			store_map.c \
 			validate_map.c \
 			validate_texture.c)
