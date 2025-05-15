@@ -16,16 +16,16 @@ static void	draw_floor(t_cub *cub, t_raycast *ray, int screen_x)
 
 static void	draw_ceiling(t_cub *cub, t_raycast *ray, int screen_x)
 {
-		int			y;
-		uint32_t	color;
+	int			y;
+	uint32_t	color;
 
-		y = 0;
-		color = (cub->ceiling.r << 24 | cub->ceiling.g << 16 | cub->ceiling.b << 8 | 0xFF);
-		while (y < ray->draw_start)
-		{
-			mlx_put_pixel(cub->p.render_img, screen_x, y, color);
-			y++;
-		}
+	y = 0;
+	color = (cub->ceiling.r << 24 | cub->ceiling.g << 16 | cub->ceiling.b << 8 | 0xFF);
+	while (y < ray->draw_start)
+	{
+		mlx_put_pixel(cub->p.render_img, screen_x, y, color);
+		y++;
+	}
 }
 
 static void	draw_vertical_column(t_cub *cub, t_player *p, t_raycast *ray, int screen_x)
