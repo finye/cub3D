@@ -185,8 +185,8 @@ int			store_map(int current_line, t_cub *cub);
 int			validate_map(t_cub *cub);
 
 // mlx_init
-void		setup_mlx(t_player *p);
-void		init_player_data(t_player *p);
+void	setup_mlx(t_player *p, t_cub *cub);
+void	init_player_data(t_player *p);
 
 // parse
 int			check_id_duplicates(int type, t_cub *cub, char **words);
