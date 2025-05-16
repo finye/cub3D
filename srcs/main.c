@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eelaine <eelaine@student.hive.fi>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/16 08:48:21 by eelaine           #+#    #+#             */
+/*   Updated: 2025/05/16 08:48:22 by eelaine          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../incl/cub3D.h"
 
 static void	validate_args(int ac, char **av)
@@ -48,12 +60,11 @@ int	main(int ac, char **av)
 		return (FAIL);
 	if (validate_map(&cub) == FAIL)
 		return (FAIL);
-	setup_mlx(&cub.p);
+	setup_mlx(&cub.p, &cub);
 	init_imgs(&cub);
 	mlx_loop_hook(cub.p.mlx, &cast_all_rays, &cub);
 	mlx_loop_hook(cub.p.mlx, &game_keyhook, &cub);
 	mlx_loop(cub.p.mlx);
-	mlx_terminate(cub.p.mlx);
 	free_exit(&cub, NULL);
 	return (SUCCESS);
 }

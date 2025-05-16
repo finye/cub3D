@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3D.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fsolomon <fsolomon@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/16 11:59:34 by fsolomon          #+#    #+#             */
+/*   Updated: 2025/05/16 12:02:53 by fsolomon         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB3D_H
 # define CUB3D_H
 
@@ -15,8 +27,6 @@
 # define ERROR -1
 
 # define RED	"\e[31m"
-# define GREEN	"\e[32m"
-# define BLUE	"\e[34m"
 # define END	"\e[0m"
 
 # define NONE 0
@@ -53,6 +63,7 @@
 # define NO_TEXTURE_PATH "No path provided for wall texture"
 # define NOT_ID "Identifier missing or invalid syntax"
 # define OUT_OF_BOUNDS "Player starting position out of bounds"
+# define RGB_SPLIT_FAIL "Failed to extract RGB values"
 # define TEX_EXT "Wall texture has an invalid extension"
 # define TEX_LOAD_FAIL "Failed to load texture png"
 # define TEX_TO_IMG_FAIL "Failed to create/resize images"
@@ -96,7 +107,7 @@ typedef struct s_player
 	double		camera_plane_y;
 	double		player_dir_x;
 	double		player_dir_y;
-	double		rot_speed;
+	double		rot_angle;
 	double		move_speed;
 	double		camera_x;
 	double		player_pos_x;
@@ -185,7 +196,7 @@ int			store_map(int current_line, t_cub *cub);
 int			validate_map(t_cub *cub);
 
 // mlx_init
-void		setup_mlx(t_player *p);
+void		setup_mlx(t_player *p, t_cub *cub);
 void		init_player_data(t_player *p);
 
 // parse
@@ -203,7 +214,8 @@ void		cast_all_rays(void *param);
 // raycast_textures
 void		init_imgs(t_cub *cub);
 mlx_image_t	*get_tex_direction(t_cub *cub, t_player *p, t_raycast *ray);
-void		draw_texture(t_cub *cub, int screen_x, t_raycast *ray, mlx_image_t *current_texture);
+void		draw_texture(t_cub *cub, int screen_x, t_raycast *ray, \
+			mlx_image_t *current_texture);
 
 // raycast utils
 void		init_raycast(t_player *p, t_raycast *ray);

@@ -29,7 +29,7 @@ MLX_DIR =	./MLX42
 MLX =		$(MLX_DIR)/build/libmlx42.a
 
 CC =		cc
-CFLAGS =	-Wall -Wextra -Werror -g
+CFLAGS =	-Wall -Wextra -Werror
 INCLUDES =	-I./libft/incl -I./incl -I./MLX42/include
 
 RM =		rm -rf
@@ -78,7 +78,7 @@ re: fclean all
 
 valgrind:
 	valgrind --leak-check=full --show-reachable=yes --show-leak-kinds=all \
-	--track-origins=yes --track-fds=yes --trace-children=yes -s \
+	--track-origins=yes -s \
 	--suppressions=mlx_suppression.supp ./cub3D $(MAP);
 
 .PHONY: all clean fclean re valgrind

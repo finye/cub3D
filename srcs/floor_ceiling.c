@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   floor_ceiling.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eelaine <eelaine@student.hive.fi>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/16 08:48:09 by eelaine           #+#    #+#             */
+/*   Updated: 2025/05/16 08:59:50 by eelaine          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../incl/cub3D.h"
 
 static int	atoi_color(char *color)
@@ -51,7 +63,11 @@ int	get_color(char *color_info, int location, t_cub *cub)
 		color = &(cub->ceiling);
 	rgb = ft_split(color_info, ',');
 	if (!rgb)
-		return (err(0), FAIL);
+	{
+		err(RGB_SPLIT_FAIL);
+		free_exit(cub, NULL);
+		return (FAIL);
+	}
 	if (set_rgb(color, rgb) == FAIL)
 		return (free_split(rgb), FAIL);
 	if (rgb[3])
