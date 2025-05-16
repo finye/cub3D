@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mlx_init.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fsolomon <fsolomon@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/16 11:54:49 by fsolomon          #+#    #+#             */
+/*   Updated: 2025/05/16 11:54:52 by fsolomon         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../incl/cub3D.h"
 
 static void	set_window_size(t_player *p, t_cub *cub)
@@ -5,6 +17,7 @@ static void	set_window_size(t_player *p, t_cub *cub)
 	mlx_t	*mlx;
 	int32_t	width;
 	int32_t	height;
+
 	mlx = mlx_init(1, 1, "temp_init", false);
 	if (!mlx)
 	{
