@@ -53,6 +53,7 @@
 # define NO_TEXTURE_PATH "No path provided for wall texture"
 # define NOT_ID "Identifier missing or invalid syntax"
 # define OUT_OF_BOUNDS "Player starting position out of bounds"
+# define RGB_SPLIT_FAIL "Failed to extract RGB values"
 # define TEX_EXT "Wall texture has an invalid extension"
 # define TEX_LOAD_FAIL "Failed to load texture png"
 # define TEX_TO_IMG_FAIL "Failed to create/resize images"
