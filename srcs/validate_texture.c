@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   validate_texture.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eelaine <eelaine@student.hive.fi>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/16 08:48:52 by eelaine           #+#    #+#             */
+/*   Updated: 2025/05/16 08:50:32 by eelaine          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../incl/cub3D.h"
 
 static mlx_texture_t	*load_texture(t_cub *cub, char *path)
@@ -10,8 +22,9 @@ static mlx_texture_t	*load_texture(t_cub *cub, char *path)
 	trimmed_path = ft_strtrim(path, "\n");
 	if (!trimmed_path)
 	{
+		err(TEX_TRIM_FAIL);
 		free_exit(cub, NULL);
-		return (err(TEX_TRIM_FAIL), NULL);
+		return (NULL);
 	}
 	texture = mlx_load_png(trimmed_path);
 	free(trimmed_path);
