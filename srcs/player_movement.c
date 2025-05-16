@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   player_movement.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fsolomon <fsolomon@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/16 11:51:09 by fsolomon          #+#    #+#             */
+/*   Updated: 2025/05/16 11:51:37 by fsolomon         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../incl/cub3D.h"
 
 static int	is_tile_wall(t_map *map, double new_pos_x, double new_pos_y)
@@ -7,7 +19,6 @@ static int	is_tile_wall(t_map *map, double new_pos_x, double new_pos_y)
 
 	map_x = (int)new_pos_x;
 	map_y = (int)new_pos_y;
-
 	if (map_x < 0 || map_x >= map->width || map_y < 0 || map_y >= map->height)
 		return (1);
 	if (map->arr[map_y][map_x] == '1')
@@ -48,22 +59,23 @@ static void	move_player(double dir_x, double dir_y, t_player *p, t_map *map)
 		p->player_pos_y = new_pos_y;
 		p->player_coord_x = (int)p->player_pos_x;
 		p->player_coord_y = (int)p->player_pos_y;
-		printf("Player moved to [%.2f, %.2f]\n", p->player_pos_x, p->player_pos_y);
 	}
 }
 
-static void	rotate_player(t_player *p, double rot_speed)
+static void	rotate_player(t_player *p, double r_angle)
 {
 	double	old_dir_x;
 	double	old_plane_x;
 
 	old_dir_x = p->player_dir_x;
 	old_plane_x = p->camera_plane_x;
-
-	p->player_dir_x  = p->player_dir_x  * cos(rot_speed) - p->player_dir_y * sin(rot_speed);
-	p->player_dir_y = old_dir_x * sin(rot_speed) + p->player_dir_y * cos(rot_speed);
-	p->camera_plane_x = p->camera_plane_x * cos(rot_speed) - p->camera_plane_y * sin(rot_speed);
-	p->camera_plane_y = old_plane_x * sin(rot_speed) + p->camera_plane_y * cos(rot_speed);
+	p->player_dir_x = p->player_dir_x * cos(r_angle) - \
+					p->player_dir_y * sin(r_angle);
+	p->player_dir_y = old_dir_x * sin(r_angle) + p->player_dir_y * cos(r_angle);
+	p->camera_plane_x = p->camera_plane_x * cos(r_angle) - \
+					p->camera_plane_y * sin(r_angle);
+	p->camera_plane_y = old_plane_x * sin(r_angle) + \
+					p->camera_plane_y * cos(r_angle);
 }
 
 void	game_keyhook(void *param)
@@ -74,10 +86,7 @@ void	game_keyhook(void *param)
 	cub = (t_cub *)param;
 	p = &cub->p;
 	if (mlx_is_key_down(p->mlx, MLX_KEY_ESCAPE))
-	{
-		printf("Moi Moi!!\n");
 		mlx_close_window(p->mlx);
-	}
 	if (mlx_is_key_down(p->mlx, MLX_KEY_A))
 		move_player(-p->camera_plane_x, -p->camera_plane_y, p, &cub->map);
 	if (mlx_is_key_down(p->mlx, MLX_KEY_D))
@@ -87,7 +96,7 @@ void	game_keyhook(void *param)
 	if (mlx_is_key_down(p->mlx, MLX_KEY_W))
 		move_player(p->player_dir_x, p->player_dir_y, p, &cub->map);
 	if (mlx_is_key_down(p->mlx, MLX_KEY_LEFT))
-		rotate_player(p, -p->rot_speed);
+		rotate_player(p, -p->rot_angle);
 	if (mlx_is_key_down(p->mlx, MLX_KEY_RIGHT))
-		rotate_player(p, p->rot_speed);
+		rotate_player(p, p->rot_angle);
 }

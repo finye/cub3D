@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3D.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fsolomon <fsolomon@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/16 11:59:34 by fsolomon          #+#    #+#             */
+/*   Updated: 2025/05/16 12:02:53 by fsolomon         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB3D_H
 # define CUB3D_H
 
@@ -15,8 +27,6 @@
 # define ERROR -1
 
 # define RED	"\e[31m"
-# define GREEN	"\e[32m"
-# define BLUE	"\e[34m"
 # define END	"\e[0m"
 
 # define NONE 0
@@ -97,7 +107,7 @@ typedef struct s_player
 	double		camera_plane_y;
 	double		player_dir_x;
 	double		player_dir_y;
-	double		rot_speed;
+	double		rot_angle;
 	double		move_speed;
 	double		camera_x;
 	double		player_pos_x;
