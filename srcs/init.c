@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eelaine <eelaine@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: fsolomon <fsolomon@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 08:48:14 by eelaine           #+#    #+#             */
-/*   Updated: 2025/05/16 08:48:16 by eelaine          ###   ########.fr       */
+/*   Updated: 2025/05/16 13:28:52 by fsolomon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	init(t_cub *cub, int fd, char *path)
 	cub->south_img = NULL;
 	cub->west_img = NULL;
 	cub->east_img = NULL;
+	cub->p.mlx = NULL;
 	init_rgb(cub);
 	init_map(cub);
 }
