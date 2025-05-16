@@ -1,7 +1,7 @@
-NO ./textures/Sunflowers.png
-SO ./textures/Wheat_Field.png
-WE ./textures/the_starry_night.png
-EA ./textures/Impression_Sunrise.png
+NO ./textures/north.png
+SO ./textures/south.png
+WE ./textures/west.png
+EA ./textures/east.png
 F 220,100,0
 C 250,30,0
 

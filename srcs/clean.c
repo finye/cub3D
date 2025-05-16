@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eelaine <eelaine@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: fsolomon <fsolomon@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 08:47:57 by eelaine           #+#    #+#             */
-/*   Updated: 2025/05/16 08:47:59 by eelaine          ###   ########.fr       */
+/*   Updated: 2025/05/16 16:26:04 by fsolomon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	free_exit(t_cub *cub, char **split)
 	free_split(split);
 	free_paths(cub);
 	free_map(cub);
-	if (cub->p.mlx)
+	if (cub && cub->p.mlx)
 		mlx_terminate(cub->p.mlx);
 	free_cub(cub);
 	exit(1);
