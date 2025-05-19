@@ -6,7 +6,7 @@
 /*   By: fsolomon <fsolomon@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 11:55:15 by fsolomon          #+#    #+#             */
-/*   Updated: 2025/05/16 11:55:18 by fsolomon         ###   ########.fr       */
+/*   Updated: 2025/05/19 11:27:35 by fsolomon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,11 @@ static void	draw_vertical_column(t_cub *cub, t_player *p, t_raycast *ray, \
 	ray->tex_pos = (ray->draw_start - p->screen_hgt / 2 + ray->line_hgt / 2) \
 		* ray->tex_step;
 	ray->y = ray->draw_start;
-	while (ray->y++ < ray->draw_end)
+	while (ray->y < ray->draw_end)
+	{
 		draw_texture(cub, screen_x, ray, current_texture);
+		ray->y++;
+	}
 	draw_ceiling(cub, ray, screen_x);
 	draw_floor(cub, ray, screen_x);
 }
